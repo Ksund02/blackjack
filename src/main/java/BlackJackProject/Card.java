@@ -1,12 +1,6 @@
-package BlackjackProject;
+package blackjackproject;
 
-<<<<<<< HEAD
-public class Card {
-    
-    private static final String validSuits = "SHDC";
-=======
 public class Card implements CardInterface, Comparable<Card> {
->>>>>>> d422060d2f24728e8419e5087e2c9dd7ff77d8aa
     private int face;
     private char suit;
 

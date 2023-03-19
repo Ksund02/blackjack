@@ -1,16 +1,11 @@
-package BlackjackProject;
+package blackjackproject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-<<<<<<< HEAD
-public class CardDeck {
-    
-=======
 public class CardDeck implements CardInterface {
->>>>>>> d422060d2f24728e8419e5087e2c9dd7ff77d8aa
     private List<Card> Deck;
     private final static Random rand = new Random();
 
@@ -56,15 +51,6 @@ public class CardDeck implements CardInterface {
     }
 
     public static void main(String[] args) {
-<<<<<<< HEAD
-        CardDeck blDeck = new CardDeck();
-        for (int face=1;face<14;face++) {
-            for (int suit=0;suit<4;suit++) {
-                
-                blDeck.addCard(new Card(face, validSuits));
-            }
-        }
-=======
         CardDeck blDeck = new CardDeck(2);
         System.out.println(blDeck.getRandomCard());
         List<Card> cd1 = new ArrayList<>();
@@ -75,6 +61,5 @@ public class CardDeck implements CardInterface {
         Collections.sort(blDeck.Deck);
         System.out.println(blDeck);
 
->>>>>>> d422060d2f24728e8419e5087e2c9dd7ff77d8aa
     }
 }

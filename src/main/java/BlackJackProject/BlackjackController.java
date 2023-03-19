@@ -1,4 +1,4 @@
-package BlackjackProject;
+package blackjackproject;
 
 public class BlackjackController {
     
