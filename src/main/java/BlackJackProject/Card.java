@@ -1,8 +1,6 @@
 package BlackjackProject;
 
-public class Card {
-    
-    protected final String validSuits = "SHDC";
+public class Card implements CardInterface, Comparable<Card> {
     private int face;
     private char suit;
 
@@ -35,5 +33,25 @@ public class Card {
         else {
             throw new IllegalArgumentException();
         }
+    }
+
+    
+
+    public int getFace() {
+        return face;
+    }
+
+    public char getSuit() {
+        return suit;
+    }
+
+    @Override
+    public String toString() {
+        return this.face+":"+this.suit;
+    }
+
+    @Override
+    public int compareTo(Card c2) {
+        return this.getFace()-c2.getFace();
     }
 }
