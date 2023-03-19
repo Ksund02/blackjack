@@ -7,11 +7,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="blackjackproject.BlackjackController">
    <children>
-      <Label alignment="CENTER" layoutX="1.0" layoutY="170.0" prefHeight="35.0" prefWidth="799.0" text="Welcome to Blackjack!">
+      <Button layoutX="366.0" layoutY="245.0" mnemonicParsing="false" onAction="#switchToStartScreen" text="Main menu" />
+      <Label layoutX="332.0" layoutY="99.0" text="This is a new game!">
          <font>
-            <Font size="24.0" />
+            <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="364.0" layoutY="288.0" mnemonicParsing="false" onAction="#switchToNewGame" text="New game" />
    </children>
 </AnchorPane>
