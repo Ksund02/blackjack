@@ -1,8 +1,10 @@
 package BlackjackProject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardDeck {
+    
     private List<Card> Deck;
 
     public CardDeck() {
@@ -22,7 +24,7 @@ public class CardDeck {
         for (int face=1;face<14;face++) {
             for (int suit=0;suit<4;suit++) {
                 
-                blDeck.addCard(new Card(face, validSu));
+                blDeck.addCard(new Card(face, validSuits));
             }
         }
     }

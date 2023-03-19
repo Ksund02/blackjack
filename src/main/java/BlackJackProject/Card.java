@@ -2,7 +2,7 @@ package BlackjackProject;
 
 public class Card {
     
-    protected final String validSuits = "SHDC";
+    private static final String validSuits = "SHDC";
     private int face;
     private char suit;
 
