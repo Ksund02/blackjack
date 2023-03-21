@@ -1,17 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="blackjackproject.BlackjackController">
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #35b837;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="blackjackproject.BlackjackController">
    <children>
-      <Button layoutX="366.0" layoutY="245.0" mnemonicParsing="false" onAction="#switchToStartScreen" text="Main menu" />
-      <Label layoutX="332.0" layoutY="99.0" text="This is a new game!">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <HBox prefHeight="70.0" prefWidth="800.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#switchToStartScreen" prefHeight="50.0" prefWidth="100.0" text="Main menu">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Save game">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <HBox prefHeight="150.0" prefWidth="800.0">
+         <children>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="20.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/C1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/C2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/C3.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/C4.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/C5.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/C6.png" />
+               </image>
+            </ImageView>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <HBox prefHeight="160.0" prefWidth="800.0" style="-fx-background-color: #09850b;">
+         <effect>
+            <Glow />
+         </effect>
+         <children>
+            <HBox prefHeight="200.0" prefWidth="300.0">
+               <children>
+                  <Slider orientation="VERTICAL">
+                     <HBox.margin>
+                        <Insets bottom="30.0" left="50.0" top="30.0" />
+                     </HBox.margin>
+                  </Slider>
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="60.0" style="-fx-background-color: #ffffff;" text="50$">
+                     <HBox.margin>
+                        <Insets left="30.0" top="65.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                     <effect>
+                        <Lighting bumpInput="$null">
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="60.0" text="BET">
+                     <HBox.margin>
+                        <Insets left="5.0" top="65.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Label alignment="CENTER" prefHeight="167.0" prefWidth="302.0" text="BLACKJACK" textFill="#e40000">
+               <font>
+                  <Font name="Serif Bold" size="48.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="25.0" right="25.0" />
+               </HBox.margin>
+            </Label>
+            <VBox prefHeight="160.0" prefWidth="156.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="67.0" text="HIT">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="50.0" top="20.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="PASS">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="50.0" top="40.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <Label prefHeight="166.0" prefWidth="156.0" text="You Win!">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="150.0" prefWidth="800.0">
+         <children>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="20.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/D1.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/D2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/D3.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/D4.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/D5.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" top="4.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@Cards/D6.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>

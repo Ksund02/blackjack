@@ -1,6 +1,7 @@
 package blackjackproject;
 
 import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +15,7 @@ public class BlackjackApp extends Application {
     public void start(Stage stage) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
         Scene startScreen = new Scene(parent);
-        Image logo = new Image("Blackjack.png");
+        Image logo = new Image(getClass().getResourceAsStream("Blackjack.png"));
         
         stage.getIcons().add(logo);
         stage.setTitle("Blackjack");
