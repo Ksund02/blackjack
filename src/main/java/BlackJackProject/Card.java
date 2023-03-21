@@ -1,12 +1,6 @@
 package BlackjackProject;
 
-<<<<<<< HEAD
-public class Card {
-    
-    private static final String validSuits = "SHDC";
-=======
 public class Card implements CardInterface, Comparable<Card> {
->>>>>>> d422060d2f24728e8419e5087e2c9dd7ff77d8aa
     private int face;
     private char suit;
 
@@ -40,8 +34,6 @@ public class Card implements CardInterface, Comparable<Card> {
             throw new IllegalArgumentException();
         }
     }
-
-    
 
     public int getFace() {
         return face;
