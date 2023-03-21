@@ -1,5 +1,7 @@
-package BlackjackProject;
+package blackjackproject;
 
 public interface CardInterface {
-    static final String validSuits = "SHDC";
+    
+    String validSuits = "SHDC"; //public, static and final by default
+
 }

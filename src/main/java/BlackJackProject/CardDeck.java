@@ -1,70 +1,57 @@
-package BlackjackProject;
+package blackjackproject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-<<<<<<< HEAD
-public class CardDeck {
-    
-=======
 public class CardDeck implements CardInterface {
->>>>>>> d422060d2f24728e8419e5087e2c9dd7ff77d8aa
-    private List<Card> Deck;
-    private final static Random rand = new Random();
+    
+    private List<Card> deck = new ArrayList<>();
 
-    public CardDeck() {
-        this.Deck = new ArrayList<>();
+    public CardDeck(int totalDecks) {
+        validDeckAmount(totalDecks);
+        
+        for (int i = 0; i < totalDecks; i++) {
+            addNewCardDeck();
+        }
     }
 
-    public CardDeck(int decks) {
-        if (negativeError(decks)) {
-            throw new IllegalArgumentException("Cannot have negative amount of carddecks");
+    private void validDeckAmount(int decks) {
+        if (decks < 0) {
+            throw new IllegalArgumentException("Cannot have negative amount of carddecks!");
         }
-        this.Deck = new ArrayList<>();
-        for (int i=0;i<decks;i++) {
-            for (int face=1;face<14;face++) {
-                for (int suit=0;suit<4;suit++) {
-                    this.addCard(new Card(face, validSuits.charAt(suit)));
-                }
+    }
+
+    private void addNewCardDeck() {
+        for (int face = 1; face < 14; face++) {
+            for (int suit = 0; suit < 4; suit++) {
+                addCard(new Card(face, validSuits.charAt(suit)));
             }
         }
     }
 
-    private boolean negativeError(int i) {
-        return i < 0;
-    }
-
     public void addCard(Card card) {
-        this.Deck.add(card);
+        deck.add(card);
     }
 
     public void removeCard(Card card) {
-        this.Deck.remove(card);
+        deck.remove(card);
     }
 
     public Card getRandomCard() {
-        Card randomCard = this.Deck.get(rand.nextInt(this.Deck.size())); // Gets a random card (index 0, to upperbound is what rand.nextint does)
-        this.Deck.remove(randomCard);
+        Random randomGenerator = new Random();
+        int randomIndex = randomGenerator.nextInt(deck.size());
+        Card randomCard = deck.get(randomIndex); // Gets a random card (index 0, to upperbound is what rand.nextint does)
+        removeCard(randomCard);
         return randomCard;
     }
 
     @Override
     public String toString() {
-        return ""+this.Deck;
+        return "" + deck;
     }
 
     public static void main(String[] args) {
-<<<<<<< HEAD
-        CardDeck blDeck = new CardDeck();
-        for (int face=1;face<14;face++) {
-            for (int suit=0;suit<4;suit++) {
-                
-                blDeck.addCard(new Card(face, validSuits));
-            }
-        }
-=======
         CardDeck blDeck = new CardDeck(2);
         System.out.println(blDeck.getRandomCard());
         List<Card> cd1 = new ArrayList<>();
@@ -72,9 +59,6 @@ public class CardDeck implements CardInterface {
         cd1.add(new Card(2, 'S'));
         cd1.add(new Card(3, 'S'));
         cd1.add(new Card(1, 'S'));
-        Collections.sort(blDeck.Deck);
         System.out.println(blDeck);
-
->>>>>>> d422060d2f24728e8419e5087e2c9dd7ff77d8aa
     }
 }
