@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class CardDeck implements CardInterface {
     
+    public static final Random randomGenerator = new Random();
     private List<Card> deck = new ArrayList<>();
 
     public CardDeck(int totalDecks) {
@@ -39,7 +40,6 @@ public class CardDeck implements CardInterface {
     }
 
     public Card getRandomCard() {
-        Random randomGenerator = new Random();
         int randomIndex = randomGenerator.nextInt(deck.size());
         Card randomCard = deck.get(randomIndex); // Gets a random card (index 0, to upperbound is what rand.nextint does)
         removeCard(randomCard);
