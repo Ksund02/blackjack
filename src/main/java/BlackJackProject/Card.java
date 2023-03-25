@@ -33,7 +33,7 @@ public class Card implements CardInterface, Comparable<Card> {
 
     @Override
     public String toString() {
-        return suit + "" + face;
+        return suit + face + ".png";
     }
 
     //Trenger vi å compare kort? Kanskje senere...

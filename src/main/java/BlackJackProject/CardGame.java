@@ -8,14 +8,15 @@ public class CardGame {
     private CardDeck cardDeck;
     private List<Card> dealerHand = new ArrayList<>();
     private List<Card> playerHand = new ArrayList<>();
-    private double balance;
-    private double currentBet;
+    private int balance;
+    private int currentBet;
 
     public CardGame(int balance, int totalDecks) {
         cardDeck = new CardDeck(totalDecks);
         setPlayerCards();
         setDealerCards();
         setBalance(balance);
+        currentBet = 10;
     }
 
     private void setPlayerCards() {
@@ -28,9 +29,9 @@ public class CardGame {
         drawCard(dealerHand);
     }
 
-    private void setBalance(int balance) {
-        if (balance <= 0) {
-            throw new IllegalArgumentException("Balance must be greater than zero!");
+    protected void setBalance(int balance) {
+        if (balance < 0) {
+            throw new IllegalArgumentException("Balance must be positive!");
         }
         this.balance = balance;
     }
@@ -67,9 +68,12 @@ public class CardGame {
         }
     }
     
-    public void betMoney(int money) {
-        balance -= money;
-        currentBet = money;
+    public void increaseBet() {
+        currentBet += 10;
+    }
+
+    public void decreaseBet() {
+        currentBet -= 10; 
     }
 
     public void newRound() {
@@ -93,11 +97,11 @@ public class CardGame {
         
     }
 
-    public double getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public double getCurrentBet() {
+    public int getCurrentBet() {
         return currentBet;
     }
     
@@ -185,15 +189,6 @@ public class CardGame {
 
         // Last case scenario where they have the same value
         return "tie";
-
-    }
-
-
-    
-
-    public static void main(String[] args) {
-        
-
 
     }
 
