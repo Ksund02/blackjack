@@ -46,6 +46,7 @@ public class CardDeck implements CardInterface {
         return randomCard;
     }
 
+    //Får vi bruk for denne?
     public List<Card> getDeck() {
         return new ArrayList<>(deck);
     }

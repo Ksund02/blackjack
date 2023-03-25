@@ -15,4 +15,5 @@ public class BlackjackController extends SceneController {
     public void switchToStartScreen(ActionEvent event) throws IOException {
         super.switchToStartScreen(event);
     }
+
 }
