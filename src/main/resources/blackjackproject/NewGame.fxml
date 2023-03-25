@@ -13,10 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #35b837;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="blackjackproject.BlackjackController">
    <children>
-      <HBox prefHeight="70.0" prefWidth="800.0">
+      <HBox prefHeight="70.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
          <children>
             <Button mnemonicParsing="false" onAction="#switchToStartScreen" prefHeight="50.0" prefWidth="100.0" text="Main menu">
                <HBox.margin>
@@ -30,7 +29,7 @@
             </Button>
          </children>
       </HBox>
-      <HBox prefHeight="150.0" prefWidth="800.0">
+      <HBox prefHeight="150.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -85,7 +84,7 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <HBox prefHeight="160.0" prefWidth="800.0" style="-fx-background-color: #09850b;">
+      <HBox prefHeight="160.0" prefWidth="800.0" style="-fx-background-color: #09850b;" VBox.vgrow="ALWAYS">
          <effect>
             <Glow />
          </effect>
@@ -157,7 +156,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="150.0" prefWidth="800.0">
+      <HBox prefHeight="150.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -209,5 +208,6 @@
             </ImageView>
          </children>
       </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" />
    </children>
 </VBox>
