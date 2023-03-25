@@ -20,7 +20,7 @@ public class Card implements CardInterface, Comparable<Card> {
         if (!validSuits.contains(""+suit)) {
             throw new IllegalArgumentException("Illegal suit!");
         }
-        this.suit=suit;
+        this.suit = suit;
     }
 
     public int getFace() {
@@ -33,7 +33,7 @@ public class Card implements CardInterface, Comparable<Card> {
 
     @Override
     public String toString() {
-        return suit + face + ".png";
+        return "cards/" + suit + "" + face + ".png";
     }
 
     //Trenger vi å compare kort? Kanskje senere...

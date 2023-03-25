@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 
 public class BlackjackController extends SceneController {
 
-    @FXML Button increaseButton, decreaseButton, betButton;
+    @FXML Button increaseButton, decreaseButton, betButton, hitButton, passButton;
 
     @FXML Label betAmountLabel, balanceLabel;
 
@@ -19,7 +19,7 @@ public class BlackjackController extends SceneController {
     @FXML ImageView playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6;
     
 
-    private CardGame cardGame = new CardGame(200, 6);
+    private CardGame cardGame = new CardGame(200, 6);    
 
     public void increaseBet() {
         cardGame.increaseBet();
@@ -52,13 +52,15 @@ public class BlackjackController extends SceneController {
         startGame();
     }
 
-    public void startGame() {
-        sleepProgram(500);
-        Image cardBackside = new Image(getClass().getResourceAsStream("BacksideCard.png"));
-        dealerCard1.setImage(cardBackside);
+    private void startGame() {
+        sleepGame(300);
+        setCardSpot(dealerCard1, "BacksideCard.png");
+        setCardSpot(dealerCard2, cardGame.getDealerHand().get(1).toString());
+        setCardSpot(playerCard1, cardGame.getPlayerHand().get(0).toString());
+        setCardSpot(playerCard2, cardGame.getPlayerHand().get(1).toString());
     }
 
-    private void sleepProgram(int sleepTime) {
+    private void sleepGame(int sleepTime) {
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
@@ -66,8 +68,8 @@ public class BlackjackController extends SceneController {
         }
     }
 
-    private void setCardSpot(ImageView spot) {
-        Image cardImage = new Image(getClass().getResourceAsStream("BacksideCard.png"));
+    private void setCardSpot(ImageView spot, String cardName) {
+        Image cardImage = new Image(getClass().getResourceAsStream(cardName));
         spot.setImage(cardImage);
     }
 

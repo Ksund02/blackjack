@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CardDeck implements CardInterface {
+public class CardDeck implements CardInterface{
     
     public static final Random randomGenerator = new Random();
     private List<Card> deck = new ArrayList<>();
@@ -66,4 +66,5 @@ public class CardDeck implements CardInterface {
         cd1.add(new Card(1, 'S'));
         System.out.println(blDeck);
     }
+
 }

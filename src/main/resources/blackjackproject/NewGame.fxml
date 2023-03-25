@@ -7,6 +7,7 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -32,33 +33,51 @@
          <children>
             <ImageView fx:id="dealerCard1" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="20.0" right="10.0" top="4.0" />
+                  <Insets bottom="4.0" left="20.0" right="10.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="dealerCard2" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="10.0" right="10.0" top="4.0" />
+                  <Insets bottom="4.0" left="10.0" right="10.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="dealerCard3" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="10.0" right="10.0" top="4.0" />
+                  <Insets bottom="4.0" left="10.0" right="10.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="dealerCard4" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="10.0" right="10.0" top="4.0" />
+                  <Insets bottom="4.0" left="10.0" right="10.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="dealerCard5" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="10.0" right="10.0" top="4.0" />
+                  <Insets bottom="4.0" left="10.0" right="10.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="dealerCard6" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="10.0" right="10.0" top="4.0" />
+                  <Insets bottom="4.0" left="10.0" right="10.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
          </children>
          <VBox.margin>
@@ -127,7 +146,7 @@
             </Label>
             <VBox prefHeight="160.0" prefWidth="156.0">
                <children>
-                  <Button disable="true" mnemonicParsing="false" prefHeight="39.0" prefWidth="67.0" text="HIT">
+                  <Button fx:id="hitButton" disable="true" mnemonicParsing="false" prefHeight="39.0" prefWidth="67.0" text="HIT">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -135,7 +154,7 @@
                         <Insets left="50.0" top="20.0" />
                      </VBox.margin>
                   </Button>
-                  <Button disable="true" mnemonicParsing="false" text="PASS">
+                  <Button fx:id="passButton" disable="true" mnemonicParsing="false" text="PASS">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -158,31 +177,49 @@
                <HBox.margin>
                   <Insets left="20.0" right="10.0" top="4.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="playerCard2" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" top="4.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="playerCard3" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" top="4.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="playerCard4" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" top="4.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="playerCard5" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" top="4.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
             <ImageView fx:id="playerCard6" fitHeight="144.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" top="4.0" />
                </HBox.margin>
+               <image>
+                  <Image url="@EmptyCard.png" />
+               </image>
             </ImageView>
          </children>
       </HBox>
