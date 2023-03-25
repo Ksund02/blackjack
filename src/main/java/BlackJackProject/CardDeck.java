@@ -46,6 +46,10 @@ public class CardDeck implements CardInterface {
         return randomCard;
     }
 
+    public List<Card> getDeck() {
+        return new ArrayList<>(deck);
+    }
+
     @Override
     public String toString() {
         return "" + deck;

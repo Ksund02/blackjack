@@ -47,4 +47,28 @@ public class CardGame {
 
     }
 
+    public int getHandValue() {
+        int totalValue = 0;
+        int totalAce = 0;
+        for (Card card : cardDeck.getDeck()) {
+            if (card.getFace() > 1) {
+                totalValue += card.getFace();
+            } else {
+                totalAce++;
+            }
+        }
+        for (int i = 0; i < totalAce; i++) {
+            if (totalValue + 11 < 22) {
+                totalValue += 11;
+            } else {
+                totalValue++;
+            }
+        }
+        return totalValue;
+    }
+
+    public boolean handValueLessThanTwentyOne() {
+        return getHandValue() > 21;
+    }
+
 }
