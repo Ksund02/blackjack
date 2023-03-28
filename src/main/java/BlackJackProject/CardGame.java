@@ -20,13 +20,13 @@ public class CardGame {
     }
 
     private void setPlayerCards() {
-        drawCard(playerHand);
-        drawCard(playerHand);
+        drawPlayerCard();
+        drawPlayerCard();
     }
 
     private void setDealerCards() {
-        drawCard(dealerHand);
-        drawCard(dealerHand);
+        drawDealerCard();
+        drawDealerCard();
     }
 
     protected void setBalance(int balance) {
@@ -37,8 +37,16 @@ public class CardGame {
     }
 
     //Kan lage dealer og player klasse? -Arv/Interface?
-    public void drawCard(List<Card> cardHand) {
-        cardHand.add(cardDeck.getRandomCard());
+    public Card drawPlayerCard() {
+        Card newCard = cardDeck.getRandomCard();
+        playerHand.add(newCard);
+        return newCard;
+    }
+
+    public Card drawDealerCard() {
+        Card newCard = cardDeck.getRandomCard();
+        dealerHand.add(newCard);
+        return newCard;
     }
 
     public int getHandValue(List<Card> cardHand) {
@@ -64,7 +72,7 @@ public class CardGame {
 
     public void dealersTurn() {
         while (getHandValue(dealerHand) < 17) {
-            drawCard(dealerHand);
+            drawDealerCard();
         }
     }
     
@@ -76,14 +84,12 @@ public class CardGame {
         currentBet -= 10; 
     }
 
-    public void newRound() {
+    public void resetCardGame() {
         returnCards(playerHand);
         returnCards(dealerHand);
         setDealerCards();
         setPlayerCards();
-        
         currentBet = 0;
-
     }
 
     private void returnCards(List<Card> cardHand) {

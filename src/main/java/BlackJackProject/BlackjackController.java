@@ -18,8 +18,14 @@ public class BlackjackController extends SceneController {
     @FXML ImageView dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6;
     @FXML ImageView playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6;
     
+    private CardGame cardGame;
+    private int nextImageView;
 
-    private CardGame cardGame = new CardGame(200, 6);    
+    @FXML
+    public void initialize() {
+        cardGame = new CardGame(200, 6);
+        nextImageView = 3;
+    }
 
     public void increaseBet() {
         cardGame.increaseBet();
@@ -52,12 +58,50 @@ public class BlackjackController extends SceneController {
         startGame();
     }
 
+    public void hitButtonPressed() {
+        Card newCard = cardGame.drawPlayerCard();
+
+        switch(nextImageView) {
+            case 3:
+                setCardSpot(playerCard3, newCard.toString());
+                break;
+            case 4:
+                setCardSpot(playerCard4, newCard.toString());
+                break;
+            case 5:
+                setCardSpot(playerCard5, newCard.toString());
+                break;
+            case 6:
+                setCardSpot(playerCard6, newCard.toString());
+                nextImageView--;
+                break;
+            default:
+                throw new IllegalAccessError("nextImageView not accessible!");
+        }
+        nextImageView++;
+
+        if (cardGame.roundOver()) {
+            endRound();
+        }
+    }
+
+    public void passButtonPressed() {
+        endRound();
+    }
+
     private void startGame() {
         sleepGame(300);
         setCardSpot(dealerCard1, "BacksideCard.png");
         setCardSpot(dealerCard2, cardGame.getDealerHand().get(1).toString());
         setCardSpot(playerCard1, cardGame.getPlayerHand().get(0).toString());
         setCardSpot(playerCard2, cardGame.getPlayerHand().get(1).toString());
+        
+        if (cardGame.roundOver()) {
+            endRound();
+        } else {
+            hitButton.setDisable(false);
+            passButton.setDisable(false);
+        }
     }
 
     private void sleepGame(int sleepTime) {
@@ -71,6 +115,21 @@ public class BlackjackController extends SceneController {
     private void setCardSpot(ImageView spot, String cardName) {
         Image cardImage = new Image(getClass().getResourceAsStream(cardName));
         spot.setImage(cardImage);
+    }
+
+    public void endRound() {
+        hitButton.setDisable(true);
+        passButton.setDisable(true);
+        switch(cardGame.checkRoundOutcome()) {
+            case "blackjack":
+                break;
+            case "won":
+                break;
+            case "tie":
+                break;
+            case "lost":
+                break;
+        }
     }
 
     @Override

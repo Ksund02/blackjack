@@ -146,7 +146,7 @@
             </Label>
             <VBox prefHeight="160.0" prefWidth="156.0">
                <children>
-                  <Button fx:id="hitButton" disable="true" mnemonicParsing="false" prefHeight="39.0" prefWidth="67.0" text="HIT">
+                  <Button fx:id="hitButton" disable="true" mnemonicParsing="false" onAction="#hitButtonPressed" prefHeight="39.0" prefWidth="67.0" text="HIT">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -154,7 +154,7 @@
                         <Insets left="50.0" top="20.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="passButton" disable="true" mnemonicParsing="false" text="PASS">
+                  <Button fx:id="passButton" disable="true" mnemonicParsing="false" onAction="#passButtonPressed" text="PASS">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
