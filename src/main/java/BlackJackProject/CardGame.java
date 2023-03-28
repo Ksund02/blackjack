@@ -16,7 +16,6 @@ public class CardGame {
         setPlayerCards();
         setDealerCards();
         setBalance(balance);
-        currentBet = 10;
     }
 
     private void setPlayerCards() {
@@ -36,7 +35,6 @@ public class CardGame {
         this.balance = balance;
     }
 
-    //Kan lage dealer og player klasse? -Arv/Interface?
     public Card drawPlayerCard() {
         Card newCard = cardDeck.getRandomCard();
         playerHand.add(newCard);
@@ -54,7 +52,11 @@ public class CardGame {
         int totalAce = 0;
         for (Card card : cardHand) {
             if (card.getFace() > 1) {
-                totalValue += card.getFace();
+                if (card.getFace() >= 10) {
+                    totalValue += 10;
+                } else {
+                    totalValue += card.getFace();
+                }
             } else {
                 totalAce++;
             }
@@ -70,7 +72,7 @@ public class CardGame {
     }
 
 
-    public void dealersTurn() {
+    public void dealerPlaysHand() {
         while (getHandValue(dealerHand) < 17) {
             drawDealerCard();
         }
@@ -85,18 +87,17 @@ public class CardGame {
     }
 
     public void resetCardGame() {
-        returnCards(playerHand);
-        returnCards(dealerHand);
+        returnCardsToDeck(playerHand);
+        returnCardsToDeck(dealerHand);
         setDealerCards();
         setPlayerCards();
-        currentBet = 0;
     }
 
-    private void returnCards(List<Card> cardHand) {
+    private void returnCardsToDeck(List<Card> cardHand) {
         for (Card card : cardHand) {
             cardDeck.addCard(card);
-            cardHand.remove(card);
         }
+        cardHand.clear();
     }
 
     public int getBalance() {
@@ -114,69 +115,31 @@ public class CardGame {
     public List<Card> getPlayerHand() {
         return new ArrayList<>(playerHand);
     }
-    
-    /*public String checkWon() {
-        //Checks if player or dealer got blackjack
-        if (getHandValue(playerHand) == 21 && playerHand.size() == 2) {
-            if (getHandValue(dealerHand)==21 && dealerHand.size() == 2) {
-                return "tie";
-            }
-            return "blackjack";
-        }
-        if (getHandValue(dealerHand) == 21 && dealerHand.size() ==2) {
-            return "lost";
-        }
-
-        // Checks if player busted
-        if (!handValueLessThanTwentyTwo(playerHand)) {
-            return "lost";
-        }
-
-        // Checks if dealer busted or if playerHand is closer to 21 than dealerHand
-        if (!handValueLessThanTwentyTwo(dealerHand) || getHandValue(playerHand) > getHandValue(dealerHand)) {
-            return "won";
-        }
-
-        // Checks if dealerhand is closer to 21
-        if (getHandValue(playerHand) < getHandValue(dealerHand)) {
-            return "lost";
-        }
-
-        // Last case scenario where they have the same value
-        return "tie";
-    }
-    */
 
     public boolean roundOver() {
         return getHandValue(playerHand) >= 21;
-        //int playerHandValue = getHandValue(playerHand);
-        //int dealerHandValue = getHandValue(dealerHand);
-/*
-        // if (spiller har trykt på pass) -> checkwinconditions
-
-
-        // Checks if player got blackjack
-        if (playerHandValue == 21 && playerHand.size() == 2) {
-            if (dealerHandValue != playerHandValue) {
-                return "blackjack";
-            } else {
-                return "tie";
-            }
-        }
-
-        //Checks if player has 21
-        if (playerHandValue == 21) {
-            return "done";
-            //dealersTurn();
-            //checkWinConditions();
-        }
-
-        // You can still hit or pass here
-        return "ongoing";
-*/
     }
 
-    public String checkRoundOutcome() {
+    public boolean cardGameLost() {
+        return balance == 0 && roundOutcome() == "lost";
+    }
+
+    public void distributeMoney(String outcome) {
+        switch (outcome) {
+            case "blackjack":
+                balance += 3 * currentBet;
+                break;
+            case "won":
+                balance += 2 * currentBet;
+                break;
+            case "tie":
+                balance += currentBet;
+                break;
+        }
+        currentBet = 0;
+    }
+
+    public String roundOutcome() {
         int playerHandValue = getHandValue(playerHand);
         int dealerHandValue = getHandValue(dealerHand);
 
@@ -199,26 +162,5 @@ public class CardGame {
         } else {
             return "tie";
         }
-
-/*
-        //Checks if dealer got blackjack
-        if (dealerHandValue == 21 && dealerHand.size() == 2) {
-            return "lost";
-        }
-
-        // Checks if dealer busted or if playerHand is closer to 21 than dealerHand
-        if (dealerHandValue > 21 || playerHandValue > dealerHandValue) {
-            return "won";
-        }
-
-        // Checks if dealerhand is closer to 21
-        if (playerHandValue < dealerHandValue) {
-            return "lost";
-        }
-
-        // Last case scenario where they have the same value
-        return "tie";
-*/
     }
-
 }

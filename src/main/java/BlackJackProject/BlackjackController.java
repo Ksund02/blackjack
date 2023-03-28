@@ -1,8 +1,12 @@
 package blackjackproject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,20 +15,26 @@ import javafx.scene.image.ImageView;
 
 public class BlackjackController extends SceneController {
 
-    @FXML Button increaseButton, decreaseButton, betButton, hitButton, passButton;
+    @FXML Button increaseButton, decreaseButton, betButton, hitButton, passButton, nextRoundButton, saveGameButton;
 
-    @FXML Label betAmountLabel, balanceLabel;
+    @FXML Label betAmountLabel, balanceLabel, roundStatusLabel, finalTextLabel;
 
     @FXML ImageView dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6;
     @FXML ImageView playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6;
     
     private CardGame cardGame;
     private int nextImageView;
+    private List<ImageView> allImageViews;
 
     @FXML
     public void initialize() {
         cardGame = new CardGame(200, 6);
         nextImageView = 3;
+
+        allImageViews = new ArrayList<>(
+            Arrays.asList(dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6, 
+                playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6)
+        );
     }
 
     public void increaseBet() {
@@ -35,6 +45,7 @@ public class BlackjackController extends SceneController {
             increaseButton.setDisable(true);
         } else if (decreaseButton.isDisabled()) {
             decreaseButton.setDisable(false);
+            betButton.setDisable(false);
         }
     }
 
@@ -42,8 +53,9 @@ public class BlackjackController extends SceneController {
         cardGame.decreaseBet();
         betAmountLabel.setText(cardGame.getCurrentBet() + "$");
 
-        if (cardGame.getCurrentBet() == 10) {
+        if (cardGame.getCurrentBet() == 0) {
             decreaseButton.setDisable(true);
+            betButton.setDisable(true);
         } else if (increaseButton.isDisabled()) {
             increaseButton.setDisable(false);
         }
@@ -90,7 +102,7 @@ public class BlackjackController extends SceneController {
     }
 
     private void startGame() {
-        sleepGame(300);
+        sleepGame(200);
         setCardSpot(dealerCard1, "BacksideCard.png");
         setCardSpot(dealerCard2, cardGame.getDealerHand().get(1).toString());
         setCardSpot(playerCard1, cardGame.getPlayerHand().get(0).toString());
@@ -101,6 +113,37 @@ public class BlackjackController extends SceneController {
         } else {
             hitButton.setDisable(false);
             passButton.setDisable(false);
+        }
+    }
+
+    public void dealerTurn() {
+        cardGame.dealerPlaysHand();
+        int index = 0;
+        List<ImageView> dealerImageView = new ArrayList<>(
+            Arrays.asList(dealerCard3, dealerCard4, dealerCard5)
+        );
+        List<Card> dealerCardsToPlay = cardGame.getDealerHand().subList(2, cardGame.getDealerHand().size());
+
+        for (Card dealerCard : dealerCardsToPlay) {
+            if (index < 3) {
+                setCardSpot(dealerImageView.get(index), dealerCard.toString());
+            } else {
+                setCardSpot(dealerCard6, dealerCard.toString());  
+            }
+            index++;
+        }
+        setCardSpot(dealerCard1, cardGame.getDealerHand().get(0).toString());
+    }
+
+    public void nextRound(Event event) {
+        cardGame.resetCardGame();
+        nextRoundButton.setVisible(false);
+        roundStatusLabel.setText("");
+        increaseButton.setDisable(false);
+        nextImageView = 3;
+        
+        for (ImageView imageView : allImageViews) {
+            setCardSpot(imageView, "EmptyCard.png");
         }
     }
 
@@ -120,16 +163,37 @@ public class BlackjackController extends SceneController {
     public void endRound() {
         hitButton.setDisable(true);
         passButton.setDisable(true);
-        switch(cardGame.checkRoundOutcome()) {
+        dealerTurn();
+        String roundOutcome = cardGame.roundOutcome();
+
+        switch(roundOutcome) {
             case "blackjack":
+                roundStatusLabel.setText("Blackjack!");
                 break;
             case "won":
+                roundStatusLabel.setText("You won!");
                 break;
             case "tie":
+                roundStatusLabel.setText("Tied!");
                 break;
             case "lost":
+                roundStatusLabel.setText("You lost!");
                 break;
         }
+        cardGame.distributeMoney(roundOutcome);
+        balanceLabel.setText("Balance: " + cardGame.getBalance() + "$");
+        betAmountLabel.setText("0$");
+        
+        if (cardGame.cardGameLost()) {
+            finalTextLabel.setText("Game lost!");
+            saveGameButton.setDisable(true);
+        } else {
+            nextRoundButton.setVisible(true);
+        }
+    }
+
+    public void saveGame() {
+
     }
 
     @Override
