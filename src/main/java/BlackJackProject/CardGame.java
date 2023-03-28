@@ -1,50 +1,41 @@
 package blackjackproject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CardGame {
     
     private CardDeck cardDeck;
-    private List<Card> dealerHand = new ArrayList<>();
-    private List<Card> playerHand = new ArrayList<>();
-    private int balance;
-    private int currentBet;
+    private Player player;
+    private Dealer dealer;
 
     public CardGame(int balance, int totalDecks) {
         cardDeck = new CardDeck(totalDecks);
+        player = new Player(200);
+        dealer = new Dealer();
         setPlayerCards();
         setDealerCards();
-        setBalance(balance);
     }
 
     private void setPlayerCards() {
-        drawPlayerCard();
-        drawPlayerCard();
+        player.drawCard(cardDeck);
+        player.drawCard(cardDeck);
     }
 
     private void setDealerCards() {
-        drawDealerCard();
-        drawDealerCard();
+        dealer.drawCard(cardDeck);
+        dealer.drawCard(cardDeck);
     }
 
-    protected void setBalance(int balance) {
-        if (balance < 0) {
-            throw new IllegalArgumentException("Balance must be positive!");
-        }
-        this.balance = balance;
+    public Player getPlayer() {
+        return player;
     }
 
-    public Card drawPlayerCard() {
-        Card newCard = cardDeck.getRandomCard();
-        playerHand.add(newCard);
-        return newCard;
+    public Dealer getDealer() {
+        return dealer;
     }
 
-    public Card drawDealerCard() {
-        Card newCard = cardDeck.getRandomCard();
-        dealerHand.add(newCard);
-        return newCard;
+    public CardDeck getCardDeck() {
+        return cardDeck;
     }
 
     public int getHandValue(List<Card> cardHand) {
@@ -61,8 +52,8 @@ public class CardGame {
                 totalAce++;
             }
         }
-        for (int i = 0; i < totalAce; i++) {
-            if (totalValue + 11 < 22 && totalAce - i > 0) {
+        for (int i = 1; i <= totalAce; i++) {
+            if (totalValue + 11 < 22 && i == totalAce) {
                 totalValue += 11;
             } else {
                 totalValue++;
@@ -71,85 +62,31 @@ public class CardGame {
         return totalValue;
     }
 
-
     public void dealerPlaysHand() {
-        while (getHandValue(dealerHand) < 17) {
-            drawDealerCard();
+        while (getHandValue(dealer.getCardHand()) < 17) {
+            dealer.drawCard(cardDeck);
         }
-    }
-    
-    public void increaseBet() {
-        currentBet += 10;
-    }
-
-    public void decreaseBet() {
-        currentBet -= 10; 
-    }
-
-    public void resetCardGame() {
-        returnCardsToDeck(playerHand);
-        returnCardsToDeck(dealerHand);
-        setDealerCards();
-        setPlayerCards();
-    }
-
-    private void returnCardsToDeck(List<Card> cardHand) {
-        for (Card card : cardHand) {
-            cardDeck.addCard(card);
-        }
-        cardHand.clear();
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public int getCurrentBet() {
-        return currentBet;
-    }
-
-    public List<Card> getDealerHand() {
-        return new ArrayList<>(dealerHand);
-    }
-
-    public List<Card> getPlayerHand() {
-        return new ArrayList<>(playerHand);
     }
 
     public boolean roundOver() {
-        return getHandValue(playerHand) >= 21;
+        return getHandValue(player.getCardHand()) >= 21;
     }
 
-    public boolean cardGameLost() {
-        return balance == 0 && roundOutcome() == "lost";
-    }
-
-    public void distributeMoney(String outcome) {
-        switch (outcome) {
-            case "blackjack":
-                balance += 3 * currentBet;
-                break;
-            case "won":
-                balance += 2 * currentBet;
-                break;
-            case "tie":
-                balance += currentBet;
-                break;
-        }
-        currentBet = 0;
+    public boolean gameLost() {
+        return player.getBalance() == 0 && roundOutcome() == "lost";
     }
 
     public String roundOutcome() {
-        int playerHandValue = getHandValue(playerHand);
-        int dealerHandValue = getHandValue(dealerHand);
+        int playerHandValue = getHandValue(player.getCardHand());
+        int dealerHandValue = getHandValue(dealer.getCardHand());
 
-        if (playerHandValue == 21 && playerHand.size() == 2) {
-            if (dealerHandValue == 21 && dealerHand.size() == 2) {
+        if (playerHandValue == 21 && player.getCardHandSize() == 2) {
+            if (dealerHandValue == 21 && dealer.getCardHandSize() == 2) {
                 return "tie";
             } else {
                 return "blackjack";
             }
-        } else if (dealerHandValue == 21 && dealerHand.size() == 2) {
+        } else if (dealerHandValue == 21 && dealer.getCardHandSize() == 2) {
             return "lost";
         } 
 
@@ -163,4 +100,34 @@ public class CardGame {
             return "tie";
         }
     }
+
+    public void distributeMoney(String outcome) {
+        switch (outcome) {
+            case "blackjack":
+                player.increaseBalance(3 * player.getCurrentBet());
+                break;
+            case "won":
+                player.increaseBalance(2 * player.getCurrentBet());
+                break;
+            case "tie":
+                player.increaseBalance(player.getCurrentBet());
+                break;
+        }
+        player.setCurrentBet(0);
+    }
+
+    public void resetCardGame() {
+        returnCardsToDeck(player);
+        returnCardsToDeck(dealer);
+        setPlayerCards();
+        setDealerCards();
+    }
+
+    private void returnCardsToDeck(CardHolder cardHolder) {
+        for (Card card : cardHolder.getCardHand()) {
+            cardDeck.addCard(card);
+        }
+        cardHolder.removeCards();
+    }
+
 }

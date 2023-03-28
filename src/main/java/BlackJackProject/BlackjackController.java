@@ -38,10 +38,10 @@ public class BlackjackController extends SceneController {
     }
 
     public void increaseBet() {
-        cardGame.increaseBet();
-        betAmountLabel.setText(cardGame.getCurrentBet() + "$");
+        cardGame.getPlayer().increaseBet();
+        betAmountLabel.setText(cardGame.getPlayer().getCurrentBet() + "$");
 
-        if (cardGame.getCurrentBet() == cardGame.getBalance()) {
+        if (cardGame.getPlayer().getCurrentBet() == cardGame.getPlayer().getBalance()) {
             increaseButton.setDisable(true);
         } else if (decreaseButton.isDisabled()) {
             decreaseButton.setDisable(false);
@@ -50,10 +50,10 @@ public class BlackjackController extends SceneController {
     }
 
     public void decreaseBet() {
-        cardGame.decreaseBet();
-        betAmountLabel.setText(cardGame.getCurrentBet() + "$");
+        cardGame.getPlayer().decreaseBet();
+        betAmountLabel.setText(cardGame.getPlayer().getCurrentBet() + "$");
 
-        if (cardGame.getCurrentBet() == 0) {
+        if (cardGame.getPlayer().getCurrentBet() == 0) {
             decreaseButton.setDisable(true);
             betButton.setDisable(true);
         } else if (increaseButton.isDisabled()) {
@@ -62,16 +62,45 @@ public class BlackjackController extends SceneController {
     }
 
     public void betButtonPressed() {
-        cardGame.setBalance(cardGame.getBalance() - cardGame.getCurrentBet());
-        balanceLabel.setText("Balance: " + cardGame.getBalance() + "$");
+        cardGame.getPlayer().decreaseBalance(cardGame.getPlayer().getCurrentBet());
+        balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
         betButton.setDisable(true);
         increaseButton.setDisable(true);
         decreaseButton.setDisable(true);
         startGame();
     }
 
+    private void startGame() {
+        sleepGame(200);
+        setCardSpot(dealerCard1, "BacksideCard.png");
+        setCardSpot(dealerCard2, cardGame.getDealer().getCardHand().get(1).toString());
+        setCardSpot(playerCard1, cardGame.getPlayer().getCardHand().get(0).toString());
+        setCardSpot(playerCard2, cardGame.getPlayer().getCardHand().get(1).toString());
+        
+        if (cardGame.roundOver()) {
+            endRound();
+        } else {
+            hitButton.setDisable(false);
+            passButton.setDisable(false);
+        }
+    }
+
+    private void setCardSpot(ImageView spot, String cardName) {
+        Image cardImage = new Image(getClass().getResourceAsStream(cardName));
+        spot.setImage(cardImage);
+    }
+
+    private void sleepGame(int sleepTime) {
+        try {
+            Thread.sleep(sleepTime);
+        } catch (InterruptedException e) {
+            System.out.println("Exited program!");
+        }
+    }
+
     public void hitButtonPressed() {
-        Card newCard = cardGame.drawPlayerCard();
+        Card newCard = cardGame.getPlayer().drawCard(cardGame.getCardDeck());
+        sleepGame(100);
 
         switch(nextImageView) {
             case 3:
@@ -101,28 +130,13 @@ public class BlackjackController extends SceneController {
         endRound();
     }
 
-    private void startGame() {
-        sleepGame(200);
-        setCardSpot(dealerCard1, "BacksideCard.png");
-        setCardSpot(dealerCard2, cardGame.getDealerHand().get(1).toString());
-        setCardSpot(playerCard1, cardGame.getPlayerHand().get(0).toString());
-        setCardSpot(playerCard2, cardGame.getPlayerHand().get(1).toString());
-        
-        if (cardGame.roundOver()) {
-            endRound();
-        } else {
-            hitButton.setDisable(false);
-            passButton.setDisable(false);
-        }
-    }
-
     public void dealerTurn() {
         cardGame.dealerPlaysHand();
         int index = 0;
         List<ImageView> dealerImageView = new ArrayList<>(
             Arrays.asList(dealerCard3, dealerCard4, dealerCard5)
         );
-        List<Card> dealerCardsToPlay = cardGame.getDealerHand().subList(2, cardGame.getDealerHand().size());
+        List<Card> dealerCardsToPlay = cardGame.getDealer().getCardHand().subList(2, cardGame.getDealer().getCardHandSize());
 
         for (Card dealerCard : dealerCardsToPlay) {
             if (index < 3) {
@@ -132,32 +146,7 @@ public class BlackjackController extends SceneController {
             }
             index++;
         }
-        setCardSpot(dealerCard1, cardGame.getDealerHand().get(0).toString());
-    }
-
-    public void nextRound(Event event) {
-        cardGame.resetCardGame();
-        nextRoundButton.setVisible(false);
-        roundStatusLabel.setText("");
-        increaseButton.setDisable(false);
-        nextImageView = 3;
-        
-        for (ImageView imageView : allImageViews) {
-            setCardSpot(imageView, "EmptyCard.png");
-        }
-    }
-
-    private void sleepGame(int sleepTime) {
-        try {
-            Thread.sleep(sleepTime);
-        } catch (InterruptedException e) {
-            System.out.println("Exited program!");
-        }
-    }
-
-    private void setCardSpot(ImageView spot, String cardName) {
-        Image cardImage = new Image(getClass().getResourceAsStream(cardName));
-        spot.setImage(cardImage);
+        setCardSpot(dealerCard1, cardGame.getDealer().getCardHand().get(0).toString());
     }
 
     public void endRound() {
@@ -181,14 +170,27 @@ public class BlackjackController extends SceneController {
                 break;
         }
         cardGame.distributeMoney(roundOutcome);
-        balanceLabel.setText("Balance: " + cardGame.getBalance() + "$");
+        balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
         betAmountLabel.setText("0$");
         
-        if (cardGame.cardGameLost()) {
+        if (cardGame.gameLost()) {
             finalTextLabel.setText("Game lost!");
+            roundStatusLabel.setText("");
             saveGameButton.setDisable(true);
         } else {
             nextRoundButton.setVisible(true);
+        }
+    }
+
+    public void nextRoundButtonPressed(Event event) {
+        cardGame.resetCardGame();
+        nextRoundButton.setVisible(false);
+        roundStatusLabel.setText("");
+        increaseButton.setDisable(false);
+        nextImageView = 3;
+        
+        for (ImageView imageView : allImageViews) {
+            setCardSpot(imageView, "EmptyCard.png");
         }
     }
 

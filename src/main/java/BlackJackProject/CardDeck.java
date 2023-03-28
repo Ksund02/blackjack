@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CardDeck implements CardInterface{
+public class CardDeck {
     
+    public static final char[] validSuits = {'S', 'H', 'D', 'C'};
     public static final Random randomGenerator = new Random();
     private List<Card> deck = new ArrayList<>();
 
@@ -17,16 +18,16 @@ public class CardDeck implements CardInterface{
         }
     }
 
-    private void validDeckAmount(int decks) {
-        if (decks < 0) {
+    private void validDeckAmount(int totalDecks) {
+        if (totalDecks < 0) {
             throw new IllegalArgumentException("Cannot have negative amount of carddecks!");
         }
     }
 
     private void addNewCardDeck() {
         for (int face = 1; face < 14; face++) {
-            for (int suit = 0; suit < 4; suit++) {
-                addCard(new Card(face, validSuits.charAt(suit)));
+            for (char suit : validSuits) {
+                addCard(new Card(face, suit));
             }
         }
     }
@@ -46,10 +47,7 @@ public class CardDeck implements CardInterface{
         return randomCard;
     }
 
-    //Får vi bruk for denne?
-    public List<Card> getDeck() {
-        return new ArrayList<>(deck);
-    }
+    //The code below is for testing:
 
     @Override
     public String toString() {

@@ -1,6 +1,8 @@
 package blackjackproject;
 
-public class Card implements CardInterface, Comparable<Card> {
+public class Card {
+    
+    public static final String validSuits = "SHDC";
     private int face;
     private char suit;
 
@@ -17,7 +19,7 @@ public class Card implements CardInterface, Comparable<Card> {
     }
 
     private void setSuit(char suit) {
-        if (!validSuits.contains(""+suit)) {
+        if (validSuits.indexOf(suit) == -1) {
             throw new IllegalArgumentException("Illegal suit!");
         }
         this.suit = suit;
@@ -34,12 +36,6 @@ public class Card implements CardInterface, Comparable<Card> {
     @Override
     public String toString() {
         return "cards/" + suit + "" + face + ".png";
-    }
-
-    //Trenger vi å compare kort? Kanskje senere...
-    @Override
-    public int compareTo(Card c2) {
-        return this.getFace() - c2.getFace();
     }
 
 }
