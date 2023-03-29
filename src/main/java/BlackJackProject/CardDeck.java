@@ -23,11 +23,11 @@ public class CardDeck {
             throw new IllegalArgumentException("Cannot have negative amount of carddecks!");
         }
     }
-
+    
     private void addNewCardDeck() {
-        for (int face = 1; face < 14; face++) {
-            for (char suit : validSuits) {
-                addCard(new Card(face, suit));
+        for (char suit : validSuits) {
+            for (int face = 1; face < 14; face++) {
+                addCard(new Card(suit, face));
             }
         }
     }
@@ -58,10 +58,10 @@ public class CardDeck {
         CardDeck blDeck = new CardDeck(2);
         System.out.println(blDeck.getRandomCard());
         List<Card> cd1 = new ArrayList<>();
-        cd1.add(new Card(5, 'S'));
-        cd1.add(new Card(2, 'S'));
-        cd1.add(new Card(3, 'S'));
-        cd1.add(new Card(1, 'S'));
+        cd1.add(new Card('S', 5));
+        cd1.add(new Card('S', 2));
+        cd1.add(new Card('S', 3));
+        cd1.add(new Card('S', 1));
         System.out.println(blDeck);
     }
 

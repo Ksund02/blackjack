@@ -6,9 +6,9 @@ public class Card {
     private int face;
     private char suit;
 
-    public Card(int face, char suit) {
-        setFace(face);
+    public Card(char suit, int face) {
         setSuit(suit);
+        setFace(face);
     }
 
     private void setFace(int face) {
