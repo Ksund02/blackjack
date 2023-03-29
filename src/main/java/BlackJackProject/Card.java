@@ -12,7 +12,7 @@ public class Card {
     }
 
     private void setFace(int face) {
-        if (face < 0 || face > 14) {
+        if (face < 1 || face > 14) {
             throw new IllegalArgumentException("Illegal face!");
         }
         this.face = face;

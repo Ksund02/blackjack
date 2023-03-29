@@ -22,9 +22,7 @@ public class Player implements CardHolder {
     }
 
     public void setCurrentBet(int currentBet) {
-        if (currentBet < 0) {
-            throw new IllegalArgumentException("Current bet must be positive!");
-        }
+        validCurrentBet(currentBet);
         this.currentBet = currentBet;
     }
 
@@ -56,11 +54,19 @@ public class Player implements CardHolder {
         }
     }
 
+    private void validCurrentBet(int currentBet) {
+        if (currentBet < 0 || currentBet > balance) {
+            throw new IllegalArgumentException("Currentbet cannot be negative or more than balance");
+        }
+    }
+
     public void increaseBet() {
+        validCurrentBet(currentBet+10);
         currentBet += 10;
     }
 
     public void decreaseBet() {
+        validCurrentBet(currentBet-10);
         currentBet -= 10; 
     }
 

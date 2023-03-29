@@ -12,7 +12,6 @@ public class CardDeck {
 
     public CardDeck(int totalDecks) {
         validDeckAmount(totalDecks);
-        
         for (int i = 0; i < totalDecks; i++) {
             addNewCardDeck();
         }
@@ -48,6 +47,10 @@ public class CardDeck {
     }
 
     //The code below is for testing:
+
+    public List<Card> getDeck() {
+        return new ArrayList<>(this.deck);
+    }
 
     @Override
     public String toString() {
