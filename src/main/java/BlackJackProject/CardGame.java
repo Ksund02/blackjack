@@ -1,5 +1,6 @@
 package blackjackproject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardGame {
@@ -7,11 +8,13 @@ public class CardGame {
     private CardDeck cardDeck;
     private Player player;
     private Dealer dealer;
+    private FileIO fileIO;
 
     public CardGame(int balance, int totalDecks) {
         cardDeck = new CardDeck(totalDecks);
         player = new Player(200);
         dealer = new Dealer();
+        fileIO = new FileIO("SavedGame.txt");
         setPlayerCards();
         setDealerCards();
     }
@@ -128,6 +131,36 @@ public class CardGame {
             cardDeck.addCard(card);
         }
         cardHolder.removeCards();
+    }
+
+    public void readStateFromFile() {
+        List<String> lines = fileIO.readFromFile();
+
+    }
+
+    public void writeStateToFile() {
+        List<String> lines = new ArrayList<>();
+
+        lines.add(newStringOfCards(player.getCardHand()));
+        lines.add("\n" + newStringOfCards(dealer.getCardHand()));
+        lines.add("\n" + player.getBalance() + "," + player.getCurrentBet());
+
+        fileIO.writeToFile(lines);
+    }
+
+    private String newStringOfCards(List<Card> cards) {
+        StringBuilder builder = new StringBuilder();
+        for (Card card : cards) {
+            builder.append(",").append(card.getSuit()).append(card.getFace());
+        }
+        return builder.substring(1);
+    }
+
+    public static void main(String[] args) {
+        CardGame cg = new CardGame(200, 1);
+        cg.getPlayer().drawCard(cg.getCardDeck());
+        cg.dealerPlaysHand();
+        cg.writeStateToFile();
     }
 
 }
