@@ -12,9 +12,9 @@ public class CardGame {
 
     public CardGame(int balance, int totalDecks) {
         cardDeck = new CardDeck(totalDecks);
-        player = new Player(200);
+        player = new Player(balance);
         dealer = new Dealer();
-        fileIO = new FileIO("SavedGame.txt");
+        fileIO = new FileIO(System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt"); //Adderer det som ikke er felles for hver datamaskin
         setPlayerCards();
         setDealerCards();
     }
@@ -157,7 +157,7 @@ public class CardGame {
     }
 
     public static void main(String[] args) {
-        CardGame cg = new CardGame(200, 1);
+        CardGame cg = new CardGame(300, 1);
         cg.getPlayer().drawCard(cg.getCardDeck());
         cg.dealerPlaysHand();
         cg.writeStateToFile();
