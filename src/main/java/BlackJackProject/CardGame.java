@@ -15,8 +15,6 @@ public class CardGame {
         player = new Player(balance);
         dealer = new Dealer();
         fileIO = new FileIO(System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt"); //Adderer det som ikke er felles for hver datamaskin
-        //setPlayerCards();
-        //setDealerCards();
     }
 
     public void setPlayerStartingHand() {
@@ -122,8 +120,6 @@ public class CardGame {
     public void resetCardGame() {
         returnCardsToDeck(player);
         returnCardsToDeck(dealer);
-        //setPlayerCards();
-        //setDealerCards();
     }
 
     private void returnCardsToDeck(CardHolder cardHolder) {

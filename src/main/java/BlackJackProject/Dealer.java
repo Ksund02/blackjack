@@ -32,9 +32,9 @@ public class Dealer implements CardHolder {
         cardHand.clear();
     }
 
+    @Override
     public void drawCard(Card card) {
-        this.cardHand.add(card);
+        cardHand.add(card);
     }
 
-    
 }

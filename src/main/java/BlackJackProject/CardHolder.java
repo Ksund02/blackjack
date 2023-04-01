@@ -6,6 +6,7 @@ public interface CardHolder {
     
     List<Card> getCardHand();
     Card drawCard(CardDeck cardDeck);
+    void drawCard(Card card);
     void removeCards();
 
 }
