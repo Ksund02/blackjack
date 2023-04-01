@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class BlackjackController extends SceneController {
+public class BlackjackController {
 
     @FXML Button increaseButton, decreaseButton, betButton, hitButton, passButton, nextRoundButton, saveGameButton;
 
@@ -23,12 +23,14 @@ public class BlackjackController extends SceneController {
     @FXML ImageView playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6;
     
     private CardGame cardGame;
+    private SceneController sceneController;
     private int nextImageView;
     private List<ImageView> allImageViews;
 
     @FXML
     public void initialize() {
         cardGame = new CardGame(200, 6);
+        sceneController = new SceneController();
         nextImageView = 3;
 
         allImageViews = new ArrayList<>(
@@ -72,6 +74,8 @@ public class BlackjackController extends SceneController {
 
     private void startGame() {
         sleepGame(200);
+        cardGame.setPlayerStartingHand();
+        cardGame.setDealerStartingHand();
         setCardSpot(dealerCard1, "BacksideCard.png");
         setCardSpot(dealerCard2, cardGame.getDealer().getCardHand().get(1).toString());
         setCardSpot(playerCard1, cardGame.getPlayer().getCardHand().get(0).toString());
@@ -133,9 +137,12 @@ public class BlackjackController extends SceneController {
     public void dealerTurn() {
         cardGame.dealerPlaysHand();
         int index = 0;
-        List<ImageView> dealerImageView = new ArrayList<>(
+        List<ImageView> dealerImageView = allImageViews.subList(2, 5);
+/*        
+        new ArrayList<>(
             Arrays.asList(dealerCard3, dealerCard4, dealerCard5)
         );
+*/
         List<Card> dealerCardsToPlay = cardGame.getDealer().getCardHand().subList(2, cardGame.getDealer().getCardHandSize());
 
         for (Card dealerCard : dealerCardsToPlay) {
@@ -195,17 +202,11 @@ public class BlackjackController extends SceneController {
     }
 
     public void saveGame() {
-
+        cardGame.writeStateToFile();
     }
 
-    @Override
-    public void switchToNewGame(ActionEvent event) throws IOException {
-        super.switchToNewGame(event);
-    }
-
-    @Override
     public void switchToStartScreen(ActionEvent event) throws IOException {
-        super.switchToStartScreen(event);
+        sceneController.switchToStartScreen(event);
     }
 
 }
