@@ -31,5 +31,10 @@ public class Dealer implements CardHolder {
     public void removeCards() {
         cardHand.clear();
     }
+
+    public void drawCard(Card card) {
+        this.cardHand.add(card);
+    }
+
     
 }
