@@ -14,17 +14,17 @@ public class CardGame {
         cardDeck = new CardDeck(totalDecks);
         player = new Player(balance);
         dealer = new Dealer();
-        fileIO = new FileIO("SavedGame.txt");
-        setPlayerCards();
-        setDealerCards();
+        fileIO = new FileIO(System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt"); //Adderer det som ikke er felles for hver datamaskin
+        //setPlayerCards();
+        //setDealerCards();
     }
 
-    private void setPlayerCards() {
+    public void setPlayerStartingHand() {
         player.drawCard(cardDeck);
         player.drawCard(cardDeck);
     }
 
-    private void setDealerCards() {
+    public void setDealerStartingHand() {
         dealer.drawCard(cardDeck);
         dealer.drawCard(cardDeck);
     }
@@ -122,8 +122,8 @@ public class CardGame {
     public void resetCardGame() {
         returnCardsToDeck(player);
         returnCardsToDeck(dealer);
-        setPlayerCards();
-        setDealerCards();
+        //setPlayerCards();
+        //setDealerCards();
     }
 
     private void returnCardsToDeck(CardHolder cardHolder) {
@@ -141,8 +141,12 @@ public class CardGame {
     public void writeStateToFile() {
         List<String> lines = new ArrayList<>();
 
-        lines.add(newStringOfCards(player.getCardHand()));
-        lines.add("\n" + newStringOfCards(dealer.getCardHand()));
+        if (player.getCardHand().isEmpty()) {
+            lines.add("N0\nN0");
+        } else {
+            lines.add(newStringOfCards(player.getCardHand()));
+            lines.add("\n" + newStringOfCards(dealer.getCardHand()));
+        }
         lines.add("\n" + player.getBalance() + "," + player.getCurrentBet());
 
         fileIO.writeToFile(lines);
@@ -157,7 +161,7 @@ public class CardGame {
     }
 
     public static void main(String[] args) {
-        CardGame cg = new CardGame(200, 1);
+        CardGame cg = new CardGame(300, 1);
         cg.getPlayer().drawCard(cg.getCardDeck());
         cg.dealerPlaysHand();
         cg.writeStateToFile();

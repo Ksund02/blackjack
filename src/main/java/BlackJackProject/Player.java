@@ -21,7 +21,7 @@ public class Player implements CardHolder {
         this.balance = balance;
     }
 
-    public void setCurrentBet(int currentBet) {
+    protected void setCurrentBet(int currentBet) {
         validCurrentBet(currentBet);
         this.currentBet = currentBet;
     }
