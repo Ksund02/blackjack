@@ -12,7 +12,7 @@ public class CardGame {
 
     public CardGame(int balance, int totalDecks) {
         cardDeck = new CardDeck(totalDecks);
-        player = new Player(200);
+        player = new Player(balance);
         dealer = new Dealer();
         fileIO = new FileIO("SavedGame.txt");
         setPlayerCards();
