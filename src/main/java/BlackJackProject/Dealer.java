@@ -33,8 +33,9 @@ public class Dealer implements CardHolder {
     }
 
     @Override
-    public void drawCard(Card card) {
+    public void drawCard(Card card, CardDeck cardDeck) {
         cardHand.add(card);
+        cardDeck.removeCard(card);
     }
 
 }

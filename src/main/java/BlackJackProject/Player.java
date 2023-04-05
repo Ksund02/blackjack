@@ -14,10 +14,8 @@ public class Player implements CardHolder {
         setBalance(balance);
     }
 
-    private void setBalance(int balance) {
-        if (balance < 0) {
-            throw new IllegalArgumentException("Balance must be positive!");
-        }
+    protected void setBalance(int balance) {
+        validMoneyAmount(balance);
         this.balance = balance;
     }
 
@@ -88,8 +86,9 @@ public class Player implements CardHolder {
     }
 
     @Override
-    public void drawCard(Card card) {
+    public void drawCard(Card card, CardDeck cardDeck) {
         cardHand.add(card);
+        cardDeck.removeCard(card);
     }
     
 }

@@ -202,7 +202,7 @@ public class BlackjackController {
     }
 
     public void saveGame() {
-        cardGame.writeStateToFile();
+        cardGame.saveCurrentCardGame();
     }
 
     public void switchToStartScreen(ActionEvent event) throws IOException {

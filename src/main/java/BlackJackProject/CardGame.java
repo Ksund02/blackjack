@@ -129,12 +129,38 @@ public class CardGame {
         cardHolder.removeCards();
     }
 
-    public void readStateFromFile() {
-        List<String> lines = fileIO.readFromFile();
+    public void loadPreviousCardGame() {
+        List<String> lines = new ArrayList<>(fileIO.readFromFile());
+        List<Card> newDealerCards = makeNewCardHand(lines.get(0).split(","));
+        List<Card> newPlayerCards = makeNewCardHand(lines.get(1).split(","));
+        String[] money = lines.get(2).split(",");
+        System.out.println(newDealerCards);
+        System.out.println(newPlayerCards);
 
+        for (Card card : newDealerCards) {
+            dealer.drawCard(card, cardDeck);
+        }
+        for (Card card : newPlayerCards) {
+            player.drawCard(card, cardDeck);
+        }
+        player.setBalance(Integer.parseInt(money[0]));
+        player.setCurrentBet(Integer.parseInt(money[1]));
     }
 
-    public void writeStateToFile() {
+    private List<Card> makeNewCardHand(String[] cards) {
+        List<Card> cardHand = new ArrayList<>();
+        if (!cards[0].equals("N0")) {
+            for (String cardString : cards) {
+                char suit = cardString.charAt(0);
+                int face = Integer.parseInt(cardString.substring(1));
+                Card card = new Card(suit, face);
+                cardHand.add(card);
+            }
+        }
+        return cardHand;
+    }
+
+    public void saveCurrentCardGame() {
         List<String> lines = new ArrayList<>();
 
         if (player.getCardHand().isEmpty()) {
@@ -160,7 +186,8 @@ public class CardGame {
         CardGame cg = new CardGame(300, 1);
         cg.getPlayer().drawCard(cg.getCardDeck());
         cg.dealerPlaysHand();
-        cg.writeStateToFile();
+        cg.saveCurrentCardGame();
+        cg.loadPreviousCardGame();
     }
 
 }
