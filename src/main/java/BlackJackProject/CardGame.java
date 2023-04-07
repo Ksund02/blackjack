@@ -78,7 +78,7 @@ public class CardGame {
     }
 
     public boolean gameLost() {
-        return player.getBalance() == 0 && roundOutcome() == "lost";
+        return player.getBalance() == 0 && roundOutcome() == "You lost!";
     }
 
     public String roundOutcome() {

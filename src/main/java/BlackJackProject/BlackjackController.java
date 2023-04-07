@@ -27,20 +27,15 @@ public class BlackjackController extends StartScreenController {
 
     @FXML
     public void initialize() {
+        nextImageView = 3;
         allImageViews = new ArrayList<>(
             Arrays.asList(dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6, 
                 playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6)
         );
 
-        if (cardGame.getFileIO().fileEmpty()) {
-            newGame();
-        } else {
+        if (!cardGame.getFileIO().fileEmpty()) {
             loadGame();
         }
-    }
-
-    public void newGame() {
-        nextImageView = 3;
     }
 
     public void loadGame() {
@@ -58,6 +53,10 @@ public class BlackjackController extends StartScreenController {
         for (Card card : cardGame.getPlayer().getCardHand()) {
             setCardSpot(playerImageViews.get(index), card.toString());
             index++;
+
+            if (index > 2) {
+                nextImageView++;
+            }
         }
 
         balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
