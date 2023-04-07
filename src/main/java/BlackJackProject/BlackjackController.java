@@ -205,7 +205,10 @@ public class BlackjackController extends StartScreenController {
         cardGame.getPlayer().setHasEndedRound(true);
         hitButton.setDisable(true);
         passButton.setDisable(true);
-        dealerTurn();
+        
+        if (cardGame.getHandValue(cardGame.getPlayer().getCardHand()) < 22) {
+            dealerTurn();
+        }
         String roundOutcome = cardGame.roundOutcome();
         roundStatusLabel.setText(roundOutcome);
         cardGame.distributeMoney(roundOutcome);
