@@ -39,6 +39,10 @@ public class CardGame {
         return cardDeck;
     }
 
+    public FileIO getFileIO() {
+        return fileIO;
+    }
+
     public int getHandValue(List<Card> cardHand) {
         int totalValue = 0;
         int totalAce = 0;
@@ -83,34 +87,34 @@ public class CardGame {
 
         if (playerHandValue == 21 && player.getCardHandSize() == 2) {
             if (dealerHandValue == 21 && dealer.getCardHandSize() == 2) {
-                return "tie";
+                return "Tied!";
             } else {
-                return "blackjack";
+                return "Blackjack!";
             }
         } else if (dealerHandValue == 21 && dealer.getCardHandSize() == 2) {
-            return "lost";
+            return "You lost!";
         } 
 
         if (playerHandValue > 21) {
-            return "lost";
+            return "You lost!";
         } else if (dealerHandValue > 21 || playerHandValue > dealerHandValue) {
-            return "won";
+            return "You won!";
         } else if (dealerHandValue > playerHandValue) {
-            return "lost";
+            return "You lost!";
         } else {
-            return "tie";
+            return "Tied!";
         }
     }
 
     public void distributeMoney(String outcome) {
         switch (outcome) {
-            case "blackjack":
+            case "Blackjack!":
                 player.increaseBalance(3 * player.getCurrentBet());
                 break;
-            case "won":
+            case "You won!":
                 player.increaseBalance(2 * player.getCurrentBet());
                 break;
-            case "tie":
+            case "Tied!":
                 player.increaseBalance(player.getCurrentBet());
                 break;
         }
@@ -120,6 +124,8 @@ public class CardGame {
     public void resetCardGame() {
         returnCardsToDeck(player);
         returnCardsToDeck(dealer);
+        player.setHasEndedRound(false);
+        player.setHasPlacedBet(false);
     }
 
     private void returnCardsToDeck(CardHolder cardHolder) {
@@ -130,12 +136,11 @@ public class CardGame {
     }
 
     public void loadPreviousCardGame() {
-        List<String> lines = new ArrayList<>(fileIO.readFromFile());
+        List<String> lines = fileIO.readFromFile();
         List<Card> newDealerCards = makeNewCardHand(lines.get(0).split(","));
         List<Card> newPlayerCards = makeNewCardHand(lines.get(1).split(","));
         String[] money = lines.get(2).split(",");
-        System.out.println(newDealerCards);
-        System.out.println(newPlayerCards);
+        String[] roundInfo = lines.get(3).split(",");
 
         for (Card card : newDealerCards) {
             dealer.drawCard(card, cardDeck);
@@ -145,6 +150,8 @@ public class CardGame {
         }
         player.setBalance(Integer.parseInt(money[0]));
         player.setCurrentBet(Integer.parseInt(money[1]));
+        player.setHasPlacedBet(Boolean.parseBoolean(roundInfo[0]));
+        player.setHasEndedRound(Boolean.parseBoolean(roundInfo[1]));
     }
 
     private List<Card> makeNewCardHand(String[] cards) {
@@ -166,10 +173,11 @@ public class CardGame {
         if (player.getCardHand().isEmpty()) {
             lines.add("N0\nN0");
         } else {
-            lines.add(newStringOfCards(player.getCardHand()));
-            lines.add("\n" + newStringOfCards(dealer.getCardHand()));
+            lines.add(newStringOfCards(dealer.getCardHand()));
+            lines.add("\n" + newStringOfCards(player.getCardHand()));
         }
         lines.add("\n" + player.getBalance() + "," + player.getCurrentBet());
+        lines.add("\n" + player.getHasPlacedBet() + "," + player.getHasEndedRound());
 
         fileIO.writeToFile(lines);
     }
@@ -189,5 +197,4 @@ public class CardGame {
         cg.saveCurrentCardGame();
         cg.loadPreviousCardGame();
     }
-
 }

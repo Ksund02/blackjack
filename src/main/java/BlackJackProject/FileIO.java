@@ -34,7 +34,7 @@ public class FileIO {
         List<String> lines = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            for (int currentLine = 1; currentLine < 4; currentLine++) {
+            for (int currentLine = 0; currentLine < 4; currentLine++) {
                 String line = reader.readLine();
                 lines.add(line);
             }
@@ -45,12 +45,24 @@ public class FileIO {
         return lines;
     }
 
+    public boolean fileEmpty() {
+        return readFromFile().get(0).equals("NA");
+    }
+
+    public void deleteFileContent() {
+        writeToFile(new ArrayList<>(Arrays.asList("NA")));
+    }
+
     public static void main(String[] args) {
         FileIO fileIO = new FileIO("SavedGame.txt");
         List<String> l = new ArrayList<>(
             Arrays.asList("C1,C3,C5", "\nS1,S2,S4", "\n200,20")
         );
         fileIO.writeToFile(l);
+        fileIO.deleteFileContent();
+        fileIO.readFromFile();
+        System.out.println(fileIO.fileEmpty());
     }
 
 }
+

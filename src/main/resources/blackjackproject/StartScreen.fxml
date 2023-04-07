@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #009b77;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="blackjackproject.StartScreenController">
    <children>
       <ImageView fitHeight="205.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
@@ -32,7 +31,7 @@
             <Insets top="30.0" />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="183.0" text="Load game" VBox.vgrow="ALWAYS">
+      <Button fx:id="loadGameButton" mnemonicParsing="false" onAction="#switchToLoadedGame" prefHeight="57.0" prefWidth="183.0" text="Load game" VBox.vgrow="ALWAYS">
          <font>
             <Font name="System Bold Italic" size="27.0" />
          </font>

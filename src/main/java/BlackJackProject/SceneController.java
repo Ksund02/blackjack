@@ -10,14 +10,12 @@ import javafx.stage.Stage;
 
 public class SceneController {
 
-    protected void switchToNewGame(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("NewGame.fxml"));
-        Scene scene = new Scene(parent);
-        setNewScene(event, scene);
+    public SceneController() {
+        
     }
 
-    protected void switchToSavedGame(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("SavedGame.fxml")); // Kan komme endringer, skal hente tilstand fra fil
+    protected void switchToNewGame(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("NewGame.fxml"));
         Scene scene = new Scene(parent);
         setNewScene(event, scene);
     }

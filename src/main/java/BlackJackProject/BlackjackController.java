@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class BlackjackController {
+public class BlackjackController extends StartScreenController {
 
     @FXML Button increaseButton, decreaseButton, betButton, hitButton, passButton, nextRoundButton, saveGameButton;
 
@@ -22,21 +22,71 @@ public class BlackjackController {
     @FXML ImageView dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6;
     @FXML ImageView playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6;
     
-    private CardGame cardGame;
-    private SceneController sceneController;
     private int nextImageView;
     private List<ImageView> allImageViews;
 
     @FXML
     public void initialize() {
-        cardGame = new CardGame(200, 6);
-        sceneController = new SceneController();
-        nextImageView = 3;
-
         allImageViews = new ArrayList<>(
             Arrays.asList(dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6, 
                 playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6)
         );
+
+        if (cardGame.getFileIO().fileEmpty()) {
+            newGame();
+        } else {
+            loadGame();
+        }
+    }
+
+    public void newGame() {
+        nextImageView = 3;
+    }
+
+    public void loadGame() {
+        cardGame.loadPreviousCardGame();
+        List<ImageView> dealerImageViews = allImageViews.subList(0, 6);
+        List<ImageView> playerImageViews = allImageViews.subList(6, 12);
+        
+        int index = 0;
+        for (Card card : cardGame.getDealer().getCardHand()) {
+            setCardSpot(dealerImageViews.get(index), card.toString());
+            index++;
+        }
+
+        index = 0;
+        for (Card card : cardGame.getPlayer().getCardHand()) {
+            setCardSpot(playerImageViews.get(index), card.toString());
+            index++;
+        }
+
+        balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
+        betAmountLabel.setText(cardGame.getPlayer().getCurrentBet() + "$");
+
+        if (cardGame.getPlayer().getHasEndedRound()) {
+            increaseButton.setDisable(true);
+            decreaseButton.setDisable(true);
+            betButton.setDisable(true);
+            nextRoundButton.setVisible(true);
+            roundStatusLabel.setText(cardGame.roundOutcome());
+            roundStatusLabel.setVisible(true);
+        } else if (cardGame.getPlayer().getHasPlacedBet()) {
+            increaseButton.setDisable(true);
+            decreaseButton.setDisable(true);
+            betButton.setDisable(true);
+            hitButton.setDisable(false);
+            passButton.setDisable(false);
+            setCardSpot(dealerCard1, "BacksideCard.png");
+        } else {
+            if (cardGame.getPlayer().getCurrentBet() == cardGame.getPlayer().getBalance()) {
+                betButton.setDisable(false);
+                increaseButton.setDisable(true);
+                decreaseButton.setDisable(false);
+            } else if (cardGame.getPlayer().getCurrentBet() != 0) {
+                betButton.setDisable(false);
+                decreaseButton.setDisable(false);
+            }
+        }
     }
 
     public void increaseBet() {
@@ -65,6 +115,7 @@ public class BlackjackController {
 
     public void betButtonPressed() {
         cardGame.getPlayer().decreaseBalance(cardGame.getPlayer().getCurrentBet());
+        cardGame.getPlayer().setHasPlacedBet(true);
         balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
         betButton.setDisable(true);
         increaseButton.setDisable(true);
@@ -121,7 +172,7 @@ public class BlackjackController {
                 nextImageView--;
                 break;
             default:
-                throw new IllegalAccessError("nextImageView not accessible!");
+                throw new IllegalAccessError("nextImageView not accessible!" + nextImageView);
         }
         nextImageView++;
 
@@ -138,11 +189,6 @@ public class BlackjackController {
         cardGame.dealerPlaysHand();
         int index = 0;
         List<ImageView> dealerImageView = allImageViews.subList(2, 5);
-/*        
-        new ArrayList<>(
-            Arrays.asList(dealerCard3, dealerCard4, dealerCard5)
-        );
-*/
         List<Card> dealerCardsToPlay = cardGame.getDealer().getCardHand().subList(2, cardGame.getDealer().getCardHandSize());
 
         for (Card dealerCard : dealerCardsToPlay) {
@@ -157,25 +203,12 @@ public class BlackjackController {
     }
 
     public void endRound() {
+        cardGame.getPlayer().setHasEndedRound(true);
         hitButton.setDisable(true);
         passButton.setDisable(true);
         dealerTurn();
         String roundOutcome = cardGame.roundOutcome();
-
-        switch(roundOutcome) {
-            case "blackjack":
-                roundStatusLabel.setText("Blackjack!");
-                break;
-            case "won":
-                roundStatusLabel.setText("You won!");
-                break;
-            case "tie":
-                roundStatusLabel.setText("Tied!");
-                break;
-            case "lost":
-                roundStatusLabel.setText("You lost!");
-                break;
-        }
+        roundStatusLabel.setText(roundOutcome);
         cardGame.distributeMoney(roundOutcome);
         balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
         betAmountLabel.setText("0$");
@@ -184,6 +217,7 @@ public class BlackjackController {
             finalTextLabel.setText("Game lost!");
             roundStatusLabel.setText("");
             saveGameButton.setDisable(true);
+            cardGame.getFileIO().deleteFileContent();
         } else {
             nextRoundButton.setVisible(true);
         }
@@ -206,7 +240,7 @@ public class BlackjackController {
     }
 
     public void switchToStartScreen(ActionEvent event) throws IOException {
-        sceneController.switchToStartScreen(event);
+        super.getSceneController().switchToStartScreen(event);
     }
 
 }

@@ -8,6 +8,8 @@ public class Player implements CardHolder {
     private List<Card> cardHand;
     private int balance;
     private int currentBet;
+    private boolean hasPlacedBet;
+    private boolean hasEndedRound;
 
     public Player(int balance) {
         cardHand = new ArrayList<>();
@@ -24,6 +26,14 @@ public class Player implements CardHolder {
         this.currentBet = currentBet;
     }
 
+    protected void setHasPlacedBet(boolean b) {
+        hasPlacedBet = b;
+    }
+
+    protected void setHasEndedRound(boolean b) {
+        hasEndedRound = b;
+    }
+
     public int getBalance() {
         return balance;
     }
@@ -34,6 +44,14 @@ public class Player implements CardHolder {
 
     public int getCardHandSize() {
         return cardHand.size();
+    }
+
+    public boolean getHasPlacedBet() {
+        return hasPlacedBet;
+    }
+
+    public boolean getHasEndedRound() {
+        return hasEndedRound;
     }
 
     public void increaseBalance(int money) {
