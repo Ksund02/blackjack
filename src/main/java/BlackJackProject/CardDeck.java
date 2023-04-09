@@ -31,14 +31,29 @@ public class CardDeck {
         }
     }
 
+    /**
+     * Adds a Card-object to the card deck.
+     * 
+     * @param card The card to add
+     */
     public void addCard(Card card) {
         deck.add(card);
     }
 
+    /**
+     * Removes a Card-object from the card deck.
+     * 
+     * @param card The card to remove
+     */
     public void removeCard(Card card) {
         deck.remove(card);
     }
 
+    /**
+     * Gets a radom card from the card deck, removes it, and returns it.
+     * 
+     * @return A random card from cardDeck
+     */
     public Card getRandomCard() {
         int randomIndex = randomGenerator.nextInt(deck.size());
         Card randomCard = deck.get(randomIndex); // Gets a random card (index 0, to upperbound is what rand.nextint does)

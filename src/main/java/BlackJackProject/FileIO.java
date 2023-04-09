@@ -18,6 +18,12 @@ public class FileIO {
         this.file = file;
     }
 
+    /**
+     * Writes each element in a list to a file. It overwrites existing content. 
+     * It also catches IOException and prints out the stack trace. 
+     * 
+     * @param lines List of lines to write
+    */
     public void writeToFile(List<String> lines) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(new File(file)));
@@ -30,6 +36,12 @@ public class FileIO {
         }
     }
 
+    /**
+     * Reads the contents of the file. It will always read the first four lines.
+     * It also catches IOException and prints out the stack trace. 
+     * 
+     * @return Each line in the file in the form of a list
+     */
     public List<String> readFromFile() {
         List<String> lines = new ArrayList<>();
         try {
@@ -45,13 +57,29 @@ public class FileIO {
         return lines;
     }
 
+    /**
+     * Checks if the file is empty.
+     * 
+     * @return true if the file starts with "NA", otherwise false
+     */
     public boolean fileEmpty() {
         return readFromFile().get(0).equals("NA");
     }
 
+    /**
+     * Deletes the contents of the file and replaces it with "NA" (empty file).
+     */
     public void deleteFileContent() {
         writeToFile(new ArrayList<>(Arrays.asList("NA")));
     }
+
+/* 
+--FILSTRUKTUR--
+D0,D1,D2,...
+P0,P1,P2,...
+balance,currentbet
+hasPlacedBet,hasEndedRound 
+*/
 
     public static void main(String[] args) {
         FileIO fileIO = new FileIO("SavedGame.txt");
