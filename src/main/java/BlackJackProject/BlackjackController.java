@@ -50,7 +50,6 @@ public class BlackjackController extends SceneController {
             nextDealerImageView++;
         }
 
-        nextPlayerImageView = 0;
         for (Card card : cardGame.getPlayer().getCardHand()) {
             setCardSpot(playerImageViews.get(nextPlayerImageView), card.toString());
             nextPlayerImageView++;
@@ -65,7 +64,6 @@ public class BlackjackController extends SceneController {
             betButton.setDisable(true);
             nextRoundButton.setVisible(true);
             roundStatusLabel.setText(cardGame.roundOutcome().getDisplayText());
-            roundStatusLabel.setVisible(true);
         } else if (cardGame.getPlayer().hasPlacedBet()) {
             increaseButton.setDisable(true);
             decreaseButton.setDisable(true);
@@ -231,7 +229,7 @@ public class BlackjackController extends SceneController {
         nextRoundButton.setVisible(false);
         roundStatusLabel.setText("");
         increaseButton.setDisable(false);
-        nextPlayerImageView = 3;
+        nextPlayerImageView = 0;
         
         for (ImageView imageView : allImageViews) {
             setCardSpot(imageView, "EmptyCard.png");
