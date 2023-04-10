@@ -1,4 +1,1 @@
-N0
-N0
-360,0
-false,false
+NA

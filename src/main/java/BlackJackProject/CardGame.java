@@ -105,7 +105,7 @@ public class CardGame {
      * @return True if the game is lost, otherwise false
      */
     public boolean gameLost() {
-        return player.getBalance() == 0 && roundOutcome() == "You lost!";
+        return player.getBalance() == 0 && roundOutcome() == RoundOutcome.LOSS;
     }
 
     /**
@@ -113,52 +113,47 @@ public class CardGame {
      * 
      * @return "Blackjack!", "You won!", "Tied!" or "You lost!" depending on the outcome 
      */
-    public String roundOutcome() {
+    public RoundOutcome roundOutcome() {
         int playerHandValue = getHandValue(player.getCardHand());
         int dealerHandValue = getHandValue(dealer.getCardHand());
 
         if (playerHandValue == 21 && player.getCardHandSize() == 2) {
             if (dealerHandValue == 21 && dealer.getCardHandSize() == 2) {
-                return "Tied!";
+                return RoundOutcome.TIE;
             } else {
-                return "Blackjack!";
+                return RoundOutcome.BLACKJACK;
             }
         } else if (dealerHandValue == 21 && dealer.getCardHandSize() == 2) {
-            return "You lost!";
+            return RoundOutcome.LOSS;
         } 
 
         if (playerHandValue > 21) {
-            return "You lost!";
+            return RoundOutcome.LOSS;
         } else if (dealerHandValue > 21 || playerHandValue > dealerHandValue) {
-            return "You won!";
+            return RoundOutcome.WIN;
         } else if (dealerHandValue > playerHandValue) {
-            return "You lost!";
+            return RoundOutcome.LOSS;
         } else {
-            return "Tied!";
+            return RoundOutcome.TIE;
         }
     }
 
     /**
      * Distributes money to the user from what the round outcome was. It also sets the current bet to zero.
-     * "Blackjack!": Tripples the bet and adds it to the balance
-     * "You won!": Doubles the bet and adds it to the balance
-     * "Tied!": The bet is returned to the balance
-     * "You lost!": Nothing is added and the current bet is removed
+     * BLACKJACK: Tripples the bet and adds it to the balance.
+     * WIN: Doubles the bet and adds it to the balance.
+     * TIE: The bet is added to the balance.
+     * LOSS: Nothing is added.
      * 
      * @param outcome The outcome of the current round
      */
-    public void distributeMoney(String outcome) {
-        switch (outcome) {
-            case "Blackjack!":
-                player.increaseBalance(3 * player.getCurrentBet());
-                break;
-            case "You won!":
-                player.increaseBalance(2 * player.getCurrentBet());
-                break;
-            case "Tied!":
-                player.increaseBalance(player.getCurrentBet());
-                break;
-        }
+    public void distributeMoney(RoundOutcome outcome) {
+        player.increaseBalance(switch (outcome) {
+            case BLACKJACK -> 3 * player.getCurrentBet();
+            case WIN       -> 2 * player.getCurrentBet();
+            case TIE       -> player.getCurrentBet();
+            case LOSS      -> 0;
+        });
         player.setCurrentBet(0);
     }
 

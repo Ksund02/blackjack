@@ -67,7 +67,7 @@ public class BlackjackController extends StartScreenController {
             decreaseButton.setDisable(true);
             betButton.setDisable(true);
             nextRoundButton.setVisible(true);
-            roundStatusLabel.setText(cardGame.roundOutcome());
+            roundStatusLabel.setText(cardGame.roundOutcome().getDisplayText());
             roundStatusLabel.setVisible(true);
         } else if (cardGame.getPlayer().getHasPlacedBet()) {
             increaseButton.setDisable(true);
@@ -209,8 +209,8 @@ public class BlackjackController extends StartScreenController {
         if (cardGame.getHandValue(cardGame.getPlayer().getCardHand()) < 22) {
             dealerTurn();
         }
-        String roundOutcome = cardGame.roundOutcome();
-        roundStatusLabel.setText(roundOutcome);
+        RoundOutcome roundOutcome = cardGame.roundOutcome();
+        roundStatusLabel.setText(roundOutcome.getDisplayText());
         cardGame.distributeMoney(roundOutcome);
         balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
         betAmountLabel.setText("0$");
