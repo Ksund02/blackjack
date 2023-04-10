@@ -11,14 +11,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FileIO {
-    
+
     public static final String filePath = System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt";
 
     /**
      * Writes each element in a list to a file. It overwrites existing content. 
      * It also catches IOException and prints out the stack trace. 
      * 
-     * @param lines List of lines to write
+     * @param lines List of strings to write
     */
     public static void writeToFile(List<String> lines) {
         try {
@@ -36,7 +36,7 @@ public class FileIO {
      * Reads the contents of the file. It will always read the first four lines.
      * It also catches IOException and prints out the stack trace. 
      * 
-     * @return Each line in the file in the form of a list
+     * @return Each line in the file in the form of a list of strings
      */
     public static List<String> readFromFile() {
         List<String> lines = new ArrayList<>();
@@ -70,7 +70,7 @@ public class FileIO {
     }
 
 /* 
---FILSTRUKTUR--
+--FILESTRUCTURE--
 D0,D1,D2,...
 P0,P1,P2,...
 balance,currentbet
@@ -88,4 +88,3 @@ hasPlacedBet,hasEndedRound
     }
 
 }
-

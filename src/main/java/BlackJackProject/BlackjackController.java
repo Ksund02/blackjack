@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -227,7 +226,7 @@ public class BlackjackController extends SceneController {
         }
     }
 
-    public void nextRoundButtonPressed(Event event) {
+    public void nextRoundButtonPressed() {
         cardGame.resetCardGame();
         nextRoundButton.setVisible(false);
         roundStatusLabel.setText("");

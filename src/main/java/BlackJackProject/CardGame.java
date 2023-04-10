@@ -8,13 +8,11 @@ public class CardGame {
     private CardDeck cardDeck;
     private Player player;
     private Dealer dealer;
-    //private FileIO fileIO;
 
     public CardGame(int balance, int totalDecks) {
         cardDeck = new CardDeck(totalDecks);
         player = new Player(balance);
         dealer = new Dealer();
-        //fileIO = new FileIO(System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt"); //Adderer det som ikke er felles for hver datamaskin
     }
 
     /**
@@ -44,11 +42,7 @@ public class CardGame {
     public CardDeck getCardDeck() {
         return cardDeck;
     }
-/*
-    public FileIO getFileIO() {
-        return fileIO;
-    }
-*/
+
     /**
      * Calculates the total value of the specified card hand. 
      * 
@@ -100,7 +94,7 @@ public class CardGame {
 
     /**
      * Checks if the game is lost. This happens when the player blanace is zero 
-     * and the round outcome is "You lost!".
+     * and the round outcome is LOSS.
      * 
      * @return True if the game is lost, otherwise false
      */
@@ -111,7 +105,7 @@ public class CardGame {
     /**
      * Finds out what the outcome of the round was. Returns a string containing the information.
      * 
-     * @return "Blackjack!", "You won!", "Tied!" or "You lost!" depending on the outcome 
+     * @return BLACKJACK, WIN, TIE or LOSS depending on the outcome 
      */
     public RoundOutcome roundOutcome() {
         int playerHandValue = getHandValue(player.getCardHand());
@@ -140,7 +134,7 @@ public class CardGame {
 
     /**
      * Distributes money to the user from what the round outcome was. It also sets the current bet to zero.
-     * BLACKJACK: Tripples the bet and adds it to the balance.
+     * BLACKJACK: Triples the bet and adds it to the balance.
      * WIN: Doubles the bet and adds it to the balance.
      * TIE: The bet is added to the balance.
      * LOSS: Nothing is added.
@@ -176,8 +170,7 @@ public class CardGame {
     }
 
     /**
-     * Loads the previous card game by using the FileIO-object. 
-     * It also manipulates the field to match this card game.
+     * Loads the previous card game by setting the field in CardGame to corresponding info in the list.
      */
     public void setCardGame(List<String> lines) {
         List<Card> newDealerCards = makeNewCardHand(lines.get(0).split(","));
@@ -211,7 +204,15 @@ public class CardGame {
     }
 
     /**
-     * Saves the current card game by using the FileIO-object.
+     * Saves the current card game by retriving info from cardGame.
+     * 
+     * --LIST STRUCTURE--
+     * "D0,D1,D2,...",
+     * "P0,P1,P2,...",
+     * "balance,currentbet",
+     * "hasPlacedBet,hasEndedRound"
+     * 
+     * @return A list of strings containing the information
      */
     public List<String> getCurrentCardGame() {
         List<String> lines = new ArrayList<>();
