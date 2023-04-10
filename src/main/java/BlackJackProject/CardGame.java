@@ -223,7 +223,7 @@ public class CardGame {
             lines.add("\n" + newStringOfCards(player.getCardHand()));
         }
         lines.add("\n" + player.getBalance() + "," + player.getCurrentBet());
-        lines.add("\n" + player.getHasPlacedBet() + "," + player.getHasEndedRound());
+        lines.add("\n" + player.hasPlacedBet() + "," + player.hasEndedRound());
 
         return lines;
     }

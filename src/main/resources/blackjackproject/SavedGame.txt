@@ -1,1 +1,4 @@
-NA
+N0
+N0
+310,310
+false,false

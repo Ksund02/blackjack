@@ -46,11 +46,11 @@ public class Player implements CardHolder {
         return cardHand.size();
     }
 
-    public boolean getHasPlacedBet() {
+    public boolean hasPlacedBet() {
         return hasPlacedBet;
     }
 
-    public boolean getHasEndedRound() {
+    public boolean hasEndedRound() {
         return hasEndedRound;
     }
 

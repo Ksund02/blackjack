@@ -23,13 +23,13 @@ public class BlackjackController extends SceneController {
     @FXML ImageView playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6;
     
     private CardGame cardGame;
-    private int nextImageView;
+    private int nextPlayerImageView;
     private List<ImageView> allImageViews;
 
     @FXML
     public void initialize() {
         cardGame = new CardGame(200, 6);
-        nextImageView = 3;
+        nextPlayerImageView = 0;
         allImageViews = new ArrayList<>(
             Arrays.asList(dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6, 
                 playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6)
@@ -45,33 +45,29 @@ public class BlackjackController extends SceneController {
         List<ImageView> dealerImageViews = allImageViews.subList(0, 6);
         List<ImageView> playerImageViews = allImageViews.subList(6, 12);
         
-        int index = 0;
+        int nextDealerImageView = 0;
         for (Card card : cardGame.getDealer().getCardHand()) {
-            setCardSpot(dealerImageViews.get(index), card.toString());
-            index++;
+            setCardSpot(dealerImageViews.get(nextDealerImageView), card.toString());
+            nextDealerImageView++;
         }
 
-        index = 0;
+        nextPlayerImageView = 0;
         for (Card card : cardGame.getPlayer().getCardHand()) {
-            setCardSpot(playerImageViews.get(index), card.toString());
-            index++;
-
-            if (index > 2) {
-                nextImageView++;
-            }
+            setCardSpot(playerImageViews.get(nextPlayerImageView), card.toString());
+            nextPlayerImageView++;
         }
 
         balanceLabel.setText("Balance: " + cardGame.getPlayer().getBalance() + "$");
         betAmountLabel.setText(cardGame.getPlayer().getCurrentBet() + "$");
 
-        if (cardGame.getPlayer().getHasEndedRound()) {
+        if (cardGame.getPlayer().hasEndedRound()) {
             increaseButton.setDisable(true);
             decreaseButton.setDisable(true);
             betButton.setDisable(true);
             nextRoundButton.setVisible(true);
             roundStatusLabel.setText(cardGame.roundOutcome().getDisplayText());
             roundStatusLabel.setVisible(true);
-        } else if (cardGame.getPlayer().getHasPlacedBet()) {
+        } else if (cardGame.getPlayer().hasPlacedBet()) {
             increaseButton.setDisable(true);
             decreaseButton.setDisable(true);
             betButton.setDisable(true);
@@ -79,11 +75,14 @@ public class BlackjackController extends SceneController {
             passButton.setDisable(false);
             setCardSpot(dealerCard1, "BacksideCard.png");
         } else {
-            if (cardGame.getPlayer().getCurrentBet() == cardGame.getPlayer().getBalance()) {
+            //The player is deciding the bet amount
+            boolean playerBetEntireBalance = cardGame.getPlayer().getCurrentBet() == cardGame.getPlayer().getBalance();
+            boolean playerBetSomething = cardGame.getPlayer().getCurrentBet() != 0;
+            if (playerBetEntireBalance) {
                 betButton.setDisable(false);
                 increaseButton.setDisable(true);
                 decreaseButton.setDisable(false);
-            } else if (cardGame.getPlayer().getCurrentBet() != 0) {
+            } else if (playerBetSomething) {
                 betButton.setDisable(false);
                 decreaseButton.setDisable(false);
             }
@@ -128,6 +127,7 @@ public class BlackjackController extends SceneController {
         sleepGame(200);
         cardGame.setPlayerStartingHand();
         cardGame.setDealerStartingHand();
+        nextPlayerImageView += 2;
         setCardSpot(dealerCard1, "BacksideCard.png");
         setCardSpot(dealerCard2, cardGame.getDealer().getCardHand().get(1).toString());
         setCardSpot(playerCard1, cardGame.getPlayer().getCardHand().get(0).toString());
@@ -158,24 +158,24 @@ public class BlackjackController extends SceneController {
         Card newCard = cardGame.getPlayer().drawCard(cardGame.getCardDeck());
         sleepGame(100);
 
-        switch(nextImageView) {
-            case 3:
+        switch(nextPlayerImageView) {
+            case 2:
                 setCardSpot(playerCard3, newCard.toString());
                 break;
-            case 4:
+            case 3:
                 setCardSpot(playerCard4, newCard.toString());
                 break;
-            case 5:
+            case 4:
                 setCardSpot(playerCard5, newCard.toString());
                 break;
-            case 6:
+            case 5:
                 setCardSpot(playerCard6, newCard.toString());
-                nextImageView--;
+                nextPlayerImageView--;
                 break;
             default:
-                throw new IllegalAccessError("nextImageView not accessible!" + nextImageView);
+                throw new IllegalAccessError("nextImageView not accessible!" + nextPlayerImageView);
         }
-        nextImageView++;
+        nextPlayerImageView++;
 
         if (cardGame.roundOver()) {
             endRound();
@@ -232,7 +232,7 @@ public class BlackjackController extends SceneController {
         nextRoundButton.setVisible(false);
         roundStatusLabel.setText("");
         increaseButton.setDisable(false);
-        nextImageView = 3;
+        nextPlayerImageView = 3;
         
         for (ImageView imageView : allImageViews) {
             setCardSpot(imageView, "EmptyCard.png");
