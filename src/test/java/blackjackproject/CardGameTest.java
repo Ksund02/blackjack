@@ -79,25 +79,25 @@ public class CardGameTest {
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().decreaseBalance(20);
-        cg1.distributeMoney("won");
+        cg1.distributeMoney(RoundOutcome.WIN);
         assertEquals(cg1.getPlayer().getBalance(), 220);
 
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().decreaseBalance(20);
-        cg1.distributeMoney("tie");
+        cg1.distributeMoney(RoundOutcome.TIE);
         assertEquals(cg1.getPlayer().getBalance(), 220);
 
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().decreaseBalance(20);
-        cg1.distributeMoney("lost");
+        cg1.distributeMoney(RoundOutcome.LOSS);
         assertEquals(cg1.getPlayer().getBalance(), 200);
 
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().increaseBet();
         cg1.getPlayer().decreaseBalance(20);
-        cg1.distributeMoney("blackjack");
+        cg1.distributeMoney(RoundOutcome.BLACKJACK);
         assertEquals(cg1.getPlayer().getBalance(), 240);
     }
 }

@@ -10,10 +10,6 @@ import javafx.stage.Stage;
 
 public class SceneController {
 
-    public SceneController() {
-        
-    }
-
     protected void switchToNewGame(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("NewGame.fxml"));
         Scene scene = new Scene(parent);

@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class BlackjackController extends StartScreenController {
+public class BlackjackController extends SceneController {
 
     @FXML Button increaseButton, decreaseButton, betButton, hitButton, passButton, nextRoundButton, saveGameButton;
 
@@ -22,24 +22,26 @@ public class BlackjackController extends StartScreenController {
     @FXML ImageView dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6;
     @FXML ImageView playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6;
     
+    private CardGame cardGame;
     private int nextImageView;
     private List<ImageView> allImageViews;
 
     @FXML
     public void initialize() {
+        cardGame = new CardGame(200, 6);
         nextImageView = 3;
         allImageViews = new ArrayList<>(
             Arrays.asList(dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6, 
                 playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6)
         );
 
-        if (!cardGame.getFileIO().fileEmpty()) {
+        if (!FileIO.fileIsEmpty()) {
             loadGame();
         }
     }
 
     public void loadGame() {
-        cardGame.loadPreviousCardGame();
+        cardGame.setCardGame(FileIO.readFromFile());
         List<ImageView> dealerImageViews = allImageViews.subList(0, 6);
         List<ImageView> playerImageViews = allImageViews.subList(6, 12);
         
@@ -219,7 +221,7 @@ public class BlackjackController extends StartScreenController {
             finalTextLabel.setText("Game lost!");
             roundStatusLabel.setText("");
             saveGameButton.setDisable(true);
-            cardGame.getFileIO().deleteFileContent();
+            FileIO.deleteFileContent();
         } else {
             nextRoundButton.setVisible(true);
         }
@@ -238,11 +240,11 @@ public class BlackjackController extends StartScreenController {
     }
 
     public void saveGame() {
-        cardGame.saveCurrentCardGame();
+        FileIO.writeToFile(cardGame.getCurrentCardGame());
     }
 
     public void switchToStartScreen(ActionEvent event) throws IOException {
-        super.getSceneController().switchToStartScreen(event);
+        super.switchToStartScreen(event);
     }
 
 }

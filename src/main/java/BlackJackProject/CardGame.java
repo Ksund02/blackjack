@@ -8,13 +8,13 @@ public class CardGame {
     private CardDeck cardDeck;
     private Player player;
     private Dealer dealer;
-    private FileIO fileIO;
+    //private FileIO fileIO;
 
     public CardGame(int balance, int totalDecks) {
         cardDeck = new CardDeck(totalDecks);
         player = new Player(balance);
         dealer = new Dealer();
-        fileIO = new FileIO(System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt"); //Adderer det som ikke er felles for hver datamaskin
+        //fileIO = new FileIO(System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt"); //Adderer det som ikke er felles for hver datamaskin
     }
 
     /**
@@ -44,11 +44,11 @@ public class CardGame {
     public CardDeck getCardDeck() {
         return cardDeck;
     }
-
+/*
     public FileIO getFileIO() {
         return fileIO;
     }
-
+*/
     /**
      * Calculates the total value of the specified card hand. 
      * 
@@ -179,8 +179,7 @@ public class CardGame {
      * Loads the previous card game by using the FileIO-object. 
      * It also manipulates the field to match this card game.
      */
-    public void loadPreviousCardGame() {
-        List<String> lines = fileIO.readFromFile();
+    public void setCardGame(List<String> lines) {
         List<Card> newDealerCards = makeNewCardHand(lines.get(0).split(","));
         List<Card> newPlayerCards = makeNewCardHand(lines.get(1).split(","));
         String[] money = lines.get(2).split(",");
@@ -214,7 +213,7 @@ public class CardGame {
     /**
      * Saves the current card game by using the FileIO-object.
      */
-    public void saveCurrentCardGame() {
+    public List<String> getCurrentCardGame() {
         List<String> lines = new ArrayList<>();
 
         if (player.getCardHand().isEmpty()) {
@@ -226,7 +225,7 @@ public class CardGame {
         lines.add("\n" + player.getBalance() + "," + player.getCurrentBet());
         lines.add("\n" + player.getHasPlacedBet() + "," + player.getHasEndedRound());
 
-        fileIO.writeToFile(lines);
+        return lines;
     }
 
     private String newStringOfCards(List<Card> cards) {
@@ -241,7 +240,7 @@ public class CardGame {
         CardGame cg = new CardGame(300, 1);
         cg.getPlayer().drawCard(cg.getCardDeck());
         cg.dealerPlaysHand();
-        cg.saveCurrentCardGame();
-        cg.loadPreviousCardGame();
+        cg.getCurrentCardGame();
+        cg.setCardGame(FileIO.readFromFile());
     }
 }
