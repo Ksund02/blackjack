@@ -17,11 +17,17 @@ public class CardGame {
         fileIO = new FileIO(System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt"); //Adderer det som ikke er felles for hver datamaskin
     }
 
+    /**
+     * Makes the player draw two cards from the card deck. This is used at the start of the game.
+     */
     public void setPlayerStartingHand() {
         player.drawCard(cardDeck);
         player.drawCard(cardDeck);
     }
 
+    /**
+     * Makes the dealer draw two cards from the card deck. This is used at the start of the game.
+     */
     public void setDealerStartingHand() {
         dealer.drawCard(cardDeck);
         dealer.drawCard(cardDeck);
@@ -43,6 +49,12 @@ public class CardGame {
         return fileIO;
     }
 
+    /**
+     * Calculates the total value of the specified card hand. 
+     * 
+     * @param cardHand The card hand to calculate the value of
+     * @return The total value of the card hand.
+     */
     public int getHandValue(List<Card> cardHand) {
         int totalValue = 0;
         int totalAce = 0;
@@ -67,20 +79,40 @@ public class CardGame {
         return totalValue;
     }
 
+    /**
+     * Makes the dealer draw cards until he reaches 17 or more.
+     */
     public void dealerPlaysHand() {
         while (getHandValue(dealer.getCardHand()) < 17) {
             dealer.drawCard(cardDeck);
         }
     }
 
+    /**
+     * Checks if the round is over without having pressed the "pass" button. 
+     * This happens when the player has a card hand value of 21 or more.
+     * 
+     * @return True if the round is over, otherwise false
+     */
     public boolean roundOver() {
         return getHandValue(player.getCardHand()) >= 21;
     }
 
+    /**
+     * Checks if the game is lost. This happens when the player blanace is zero 
+     * and the round outcome is "You lost!".
+     * 
+     * @return True if the game is lost, otherwise false
+     */
     public boolean gameLost() {
         return player.getBalance() == 0 && roundOutcome() == "You lost!";
     }
 
+    /**
+     * Finds out what the outcome of the round was. Returns a string containing the information.
+     * 
+     * @return "Blackjack!", "You won!", "Tied!" or "You lost!" depending on the outcome 
+     */
     public String roundOutcome() {
         int playerHandValue = getHandValue(player.getCardHand());
         int dealerHandValue = getHandValue(dealer.getCardHand());
@@ -106,6 +138,15 @@ public class CardGame {
         }
     }
 
+    /**
+     * Distributes money to the user from what the round outcome was. It also sets the current bet to zero.
+     * "Blackjack!": Tripples the bet and adds it to the balance
+     * "You won!": Doubles the bet and adds it to the balance
+     * "Tied!": The bet is returned to the balance
+     * "You lost!": Nothing is added and the current bet is removed
+     * 
+     * @param outcome The outcome of the current round
+     */
     public void distributeMoney(String outcome) {
         switch (outcome) {
             case "Blackjack!":
@@ -121,6 +162,10 @@ public class CardGame {
         player.setCurrentBet(0);
     }
 
+    /**
+     * Returns the player and dealer cards to the deck. 
+     * It also sets the players boolean values containing round information to false.
+     */
     public void resetCardGame() {
         returnCardsToDeck(player);
         returnCardsToDeck(dealer);
@@ -135,6 +180,10 @@ public class CardGame {
         cardHolder.removeCards();
     }
 
+    /**
+     * Loads the previous card game by using the FileIO-object. 
+     * It also manipulates the field to match this card game.
+     */
     public void loadPreviousCardGame() {
         List<String> lines = fileIO.readFromFile();
         List<Card> newDealerCards = makeNewCardHand(lines.get(0).split(","));
@@ -167,6 +216,9 @@ public class CardGame {
         return cardHand;
     }
 
+    /**
+     * Saves the current card game by using the FileIO-object.
+     */
     public void saveCurrentCardGame() {
         List<String> lines = new ArrayList<>();
 
