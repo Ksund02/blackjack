@@ -12,7 +12,7 @@ import java.util.List;
 
 public class FileIO {
 
-    public static final String filePath = System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt";
+    private static final String filePath = System.getProperty("user.dir") + "/src/main/resources/blackjackproject/SavedGame.txt";
 
     /**
      * Writes each element in a list to a file. It overwrites existing content. 
