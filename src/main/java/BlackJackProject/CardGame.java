@@ -16,17 +16,12 @@ public class CardGame {
     }
 
     /**
-     * Makes the player draw two cards from the card deck. This is used at the start of the game.
+     * Makes the player and dealer draw two cards each from the card deck. 
+     * This is used at the start of the game.
      */
-    public void setPlayerStartingHand() {
+    public void setStartingCardHands() {
         player.drawCard(cardDeck);
         player.drawCard(cardDeck);
-    }
-
-    /**
-     * Makes the dealer draw two cards from the card deck. This is used at the start of the game.
-     */
-    public void setDealerStartingHand() {
         dealer.drawCard(cardDeck);
         dealer.drawCard(cardDeck);
     }

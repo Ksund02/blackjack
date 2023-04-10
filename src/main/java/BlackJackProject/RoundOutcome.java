@@ -1,6 +1,7 @@
 package blackjackproject;
 
 public enum RoundOutcome {
+    
     BLACKJACK("Blackjack!"),
     WIN("You win!"),
     TIE("Tied!"),

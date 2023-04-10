@@ -122,8 +122,7 @@ public class BlackjackController extends SceneController {
 
     private void startGame() {
         sleepGame(200);
-        cardGame.setPlayerStartingHand();
-        cardGame.setDealerStartingHand();
+        cardGame.setStartingCardHands();
         nextPlayerImageView += 2;
         setCardSpot(dealerCard1, "BacksideCard.png");
         setCardSpot(dealerCard2, cardGame.getDealer().getCardHand().get(1).toString());

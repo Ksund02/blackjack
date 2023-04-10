@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CardDeckTest {
+
     private CardDeck cd1;
     private CardDeck cd2;
 
@@ -18,15 +19,18 @@ public class CardDeckTest {
     }
 
     @Test
-    @DisplayName("testing CardDeck constructor with invalid values")
+    @DisplayName("Test constructor")
     public void testCardDeckConstructor() {
         assertThrows(IllegalArgumentException.class, () -> {
             new CardDeck(-1);
         });
+
+        assertEquals(52, cd1.getDeck().size());
+        assertEquals(0, cd2.getDeck().size());
     }
 
     @Test
-    @DisplayName("testing addCard")
+    @DisplayName("Test adding card")
     public void testAddCard() {
         Card c1 = new Card('S', 3);
         cd2.addCard(c1);
@@ -34,19 +38,23 @@ public class CardDeckTest {
     }
 
     @Test
-    @DisplayName("testing removeCard")
+    @DisplayName("Test removing card")
     public void testRemoveCard() {
         Card c1 = new Card('S', 3);
-        cd2.addCard(c1);
-        cd2.removeCard(c1);
-        assertEquals(false, cd2.getDeck().contains(c1));
+        cd1.removeCard(c1);
+        assertEquals(false, cd1.getDeck().contains(c1));
     }
 
     @Test
-    @DisplayName("testing getRandomCard")
+    @DisplayName("Test drawing a random card")
     public void testRandomCard() {
-        Card random_card = cd1.getRandomCard();
-        assertEquals(true, random_card instanceof Card);
-        assertEquals(false, cd1.getDeck().contains(random_card));
+        Card random_card;
+
+        for (int i = 0; i < 20; i++) {
+            random_card = cd1.getRandomCard();
+            assertEquals(true, random_card instanceof Card);
+            assertEquals(false, cd1.getDeck().contains(random_card));
+        }
     }
+
 }

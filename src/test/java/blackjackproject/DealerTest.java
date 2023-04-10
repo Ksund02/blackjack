@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
+
     private Dealer d1;
     private CardDeck cd0;
 
@@ -17,24 +18,24 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("testing dealer constructor")
+    @DisplayName("Test constructor")
     public void testDealerConstructor() {
-        assertEquals(d1.getCardHandSize(), 0);
+        assertEquals(0, d1.getCardHandSize());
     }
 
     @Test
-    @DisplayName("testing drawCard")
+    @DisplayName("Test drawing card")
     public void testDrawCard() {
         Card drawnCard = d1.drawCard(cd0);
-        assertEquals(drawnCard instanceof Card, true);
-        assertEquals(d1.getCardHand().contains(drawnCard), true);
+        assertEquals(true, drawnCard instanceof Card);
+        assertEquals(true, d1.getCardHand().contains(drawnCard));
     }
 
     @Test
-    @DisplayName("testing removeCards")
+    @DisplayName("Test removing card")
     public void testRemoveCards() {
         d1.drawCard(cd0);
         d1.removeCards();
-        assertEquals(d1.getCardHand().size(), 0);
+        assertEquals(d1.getCardHandSize(), 0);
     }
 }
