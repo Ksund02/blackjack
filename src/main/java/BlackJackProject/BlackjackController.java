@@ -23,16 +23,19 @@ public class BlackjackController extends SceneController {
     
     private CardGame cardGame;
     private int nextPlayerImageView;
-    private List<ImageView> allImageViews;
-
+    private int nextDealerImageView;
+    private List<ImageView> playerImageViews;
+    private List<ImageView> dealerImageViews;
+    
     @FXML
     public void initialize() {
         cardGame = new CardGame(200, 6);
-        nextPlayerImageView = 0;
-        allImageViews = new ArrayList<>(
-            Arrays.asList(dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6, 
-                playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6)
-        );
+        playerImageViews = new ArrayList<>(Arrays.asList(
+            playerCard1, playerCard2, playerCard3, playerCard4, playerCard5, playerCard6
+        ));
+        dealerImageViews = new ArrayList<>(Arrays.asList(
+            dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealerCard6
+        ));
 
         if (!FileIO.fileIsEmpty()) {
             loadGame();
@@ -41,10 +44,10 @@ public class BlackjackController extends SceneController {
 
     public void loadGame() {
         cardGame.setCardGame(FileIO.readFromFile());
-        List<ImageView> dealerImageViews = allImageViews.subList(0, 6);
-        List<ImageView> playerImageViews = allImageViews.subList(6, 12);
+        //List<ImageView> dealerImageViews = allImageViews.subList(0, 6);
+        //List<ImageView> playerImageViews = allImageViews.subList(6, 12);
         
-        int nextDealerImageView = 0;
+        //int nextDealerImageView = 0;
         for (Card card : cardGame.getDealer().getCardHand()) {
             setCardSpot(dealerImageViews.get(nextDealerImageView), card.toString());
             nextDealerImageView++;
@@ -123,11 +126,12 @@ public class BlackjackController extends SceneController {
     private void startGame() {
         sleepGame(200);
         cardGame.setStartingCardHands();
-        nextPlayerImageView += 2;
         setCardSpot(dealerCard1, "BacksideCard.png");
         setCardSpot(dealerCard2, cardGame.getDealer().getCardHand().get(1).toString());
         setCardSpot(playerCard1, cardGame.getPlayer().getCardHand().get(0).toString());
         setCardSpot(playerCard2, cardGame.getPlayer().getCardHand().get(1).toString());
+        nextPlayerImageView += 2;
+        nextDealerImageView += 2;
         
         if (cardGame.roundOver()) {
             endRound();
@@ -184,13 +188,13 @@ public class BlackjackController extends SceneController {
 
     private void dealerTurn() {
         cardGame.dealerPlaysHand();
-        int nextDealerImageView = 2;
-        List<ImageView> dealerImageView = allImageViews.subList(0, 5);
+        //int nextDealerImageView = 2;
+        //List<ImageView> dealerImageView = allImageViews.subList(0, 5);
         List<Card> dealerCardsToPlay = cardGame.getDealer().getCardHand().subList(2, cardGame.getDealer().getCardHandSize());
 
         for (Card dealerCard : dealerCardsToPlay) {
             if (nextDealerImageView < 5) {
-                setCardSpot(dealerImageView.get(nextDealerImageView), dealerCard.toString());
+                setCardSpot(dealerImageViews.get(nextDealerImageView), dealerCard.toString());
             } else {
                 setCardSpot(dealerCard6, dealerCard.toString());  
             }
@@ -203,8 +207,8 @@ public class BlackjackController extends SceneController {
         cardGame.getPlayer().setHasEndedRound(true);
         hitButton.setDisable(true);
         passButton.setDisable(true);
-        
-        if (cardGame.roundOutcome() == RoundOutcome.BLACKJACK) {
+
+        if (cardGame.roundOutcome().equals(RoundOutcome.BLACKJACK)) {
             setCardSpot(dealerCard1, cardGame.getDealer().getCardHand().get(0).toString());
         } else if (cardGame.getHandValue(cardGame.getPlayer().getCardHand()) < 22) {
             dealerTurn();
@@ -231,7 +235,11 @@ public class BlackjackController extends SceneController {
         roundStatusLabel.setText("");
         increaseButton.setDisable(false);
         nextPlayerImageView = 0;
+        nextDealerImageView = 0;
         
+        List<ImageView> allImageViews = new ArrayList<>();
+        allImageViews.addAll(dealerImageViews);
+        allImageViews.addAll(playerImageViews);
         for (ImageView imageView : allImageViews) {
             setCardSpot(imageView, "EmptyCard.png");
         }
