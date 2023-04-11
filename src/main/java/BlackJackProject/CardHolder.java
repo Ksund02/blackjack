@@ -20,7 +20,7 @@ public interface CardHolder {
     Card drawCard(CardDeck cardDeck);
 
     /**
-     * draws a specific card from the card deck.
+     * Draws a specific card from the card deck.
      * 
      * @param card The specific card to draw
      * @param cardDeck The card deck to draw from

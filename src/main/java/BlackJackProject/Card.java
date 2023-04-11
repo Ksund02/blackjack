@@ -5,7 +5,6 @@ public class Card {
     public static final String validSuits = "SHDC";
     private char suit;
     private int face;
-    
 
     public Card(char suit, int face) {
         setSuit(suit);

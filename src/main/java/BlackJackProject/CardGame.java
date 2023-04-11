@@ -203,9 +203,9 @@ public class CardGame {
      * 
      * --LIST STRUCTURE--
      * "D0,D1,D2,...",
-     * "P0,P1,P2,...",
-     * "balance,currentbet",
-     * "hasPlacedBet,hasEndedRound"
+     * "\nP0,P1,P2,...",
+     * "\nbalance,currentbet",
+     * "\nhasPlacedBet,hasEndedRound"
      * 
      * @return A list of strings containing the information
      */

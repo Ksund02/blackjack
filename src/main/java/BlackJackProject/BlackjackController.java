@@ -182,19 +182,19 @@ public class BlackjackController extends SceneController {
         endRound();
     }
 
-    public void dealerTurn() {
+    private void dealerTurn() {
         cardGame.dealerPlaysHand();
-        int index = 0;
-        List<ImageView> dealerImageView = allImageViews.subList(2, 5);
+        int nextDealerImageView = 2;
+        List<ImageView> dealerImageView = allImageViews.subList(0, 5);
         List<Card> dealerCardsToPlay = cardGame.getDealer().getCardHand().subList(2, cardGame.getDealer().getCardHandSize());
 
         for (Card dealerCard : dealerCardsToPlay) {
-            if (index < 3) {
-                setCardSpot(dealerImageView.get(index), dealerCard.toString());
+            if (nextDealerImageView < 5) {
+                setCardSpot(dealerImageView.get(nextDealerImageView), dealerCard.toString());
             } else {
                 setCardSpot(dealerCard6, dealerCard.toString());  
             }
-            index++;
+            nextDealerImageView++;
         }
         setCardSpot(dealerCard1, cardGame.getDealer().getCardHand().get(0).toString());
     }
@@ -204,7 +204,9 @@ public class BlackjackController extends SceneController {
         hitButton.setDisable(true);
         passButton.setDisable(true);
         
-        if (cardGame.getHandValue(cardGame.getPlayer().getCardHand()) < 22) {
+        if (cardGame.roundOutcome() == RoundOutcome.BLACKJACK) {
+            setCardSpot(dealerCard1, cardGame.getDealer().getCardHand().get(0).toString());
+        } else if (cardGame.getHandValue(cardGame.getPlayer().getCardHand()) < 22) {
             dealerTurn();
         }
         RoundOutcome roundOutcome = cardGame.roundOutcome();
