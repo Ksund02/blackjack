@@ -44,10 +44,7 @@ public class BlackjackController extends SceneController {
 
     public void loadGame() {
         cardGame.setCardGame(FileIO.readFromFile());
-        //List<ImageView> dealerImageViews = allImageViews.subList(0, 6);
-        //List<ImageView> playerImageViews = allImageViews.subList(6, 12);
-        
-        //int nextDealerImageView = 0;
+       
         for (Card card : cardGame.getDealer().getCardHand()) {
             setCardSpot(dealerImageViews.get(nextDealerImageView), card.toString());
             nextDealerImageView++;
@@ -188,8 +185,6 @@ public class BlackjackController extends SceneController {
 
     private void dealerTurn() {
         cardGame.dealerPlaysHand();
-        //int nextDealerImageView = 2;
-        //List<ImageView> dealerImageView = allImageViews.subList(0, 5);
         List<Card> dealerCardsToPlay = cardGame.getDealer().getCardHand().subList(2, cardGame.getDealer().getCardHandSize());
 
         for (Card dealerCard : dealerCardsToPlay) {

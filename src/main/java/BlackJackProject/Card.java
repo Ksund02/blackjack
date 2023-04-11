@@ -2,20 +2,13 @@ package blackjackproject;
 
 public class Card {
     
-    public static final String validSuits = "SHDC";
+    private static final String validSuits = "SHDC";
     private char suit;
     private int face;
 
     public Card(char suit, int face) {
         setSuit(suit);
         setFace(face);
-    }
-
-    private void setFace(int face) {
-        if (face < 1 || face > 14) {
-            throw new IllegalArgumentException("Illegal face!");
-        }
-        this.face = face;
     }
 
     private void setSuit(char suit) {
@@ -25,12 +18,19 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getFace() {
-        return face;
+    private void setFace(int face) {
+        if (face < 1 || face > 14) {
+            throw new IllegalArgumentException("Illegal face!");
+        }
+        this.face = face;
     }
 
     public char getSuit() {
         return suit;
+    }
+
+    public int getFace() {
+        return face;
     }
 
     @Override

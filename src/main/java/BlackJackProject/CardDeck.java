@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class CardDeck {
     
-    public static final char[] validSuits = {'S', 'H', 'D', 'C'};
-    public static final Random randomGenerator = new Random();
+    private static final char[] validSuits = {'S', 'H', 'D', 'C'};
+    private static final Random randomGenerator = new Random();
     private List<Card> deck = new ArrayList<>();
 
     public CardDeck(int totalDecks) {
@@ -64,7 +64,7 @@ public class CardDeck {
     //The code below is for testing:
 
     public List<Card> getDeck() {
-        return new ArrayList<>(this.deck);
+        return new ArrayList<>(deck);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class BlackjackApp extends Application {
         Scene startScreen = new Scene(parent);
         Image logo = new Image(getClass().getResourceAsStream("Blackjack.png"));
         
-        //playMusic("JazzOOP.mp3");
+        playMusic("JazzOOP.mp3");
         stage.getIcons().add(logo);
         stage.setTitle("Blackjack");
         stage.setScene(startScreen);
