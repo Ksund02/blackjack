@@ -9,7 +9,7 @@ public enum RoundOutcome {
 
     private final String displayText;
 
-    RoundOutcome(String displayText) {
+    private RoundOutcome(String displayText) {
         this.displayText = displayText;
     }
 

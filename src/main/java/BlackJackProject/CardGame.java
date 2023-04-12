@@ -44,10 +44,10 @@ public class CardGame {
      * @param cardHand The card hand to calculate the value of
      * @return The total value of the card hand.
      */
-    public int getHandValue(List<Card> cardHand) {
+    public int getHandValue(CardHolder cardHolder) {
         int totalValue = 0;
         int totalAce = 0;
-        for (Card card : cardHand) {
+        for (Card card : cardHolder.getCardHand()) {
             if (card.getFace() > 1) {
                 if (card.getFace() >= 10) {
                     totalValue += 10;
@@ -72,7 +72,7 @@ public class CardGame {
      * Makes the dealer draw cards until he reaches 17 or more.
      */
     public void dealerPlaysHand() {
-        while (getHandValue(dealer.getCardHand()) < 17) {
+        while (getHandValue(dealer) < 17) {
             dealer.drawCard(cardDeck);
         }
     }
@@ -84,7 +84,7 @@ public class CardGame {
      * @return True if the round is over, otherwise false
      */
     public boolean roundOver() {
-        return getHandValue(player.getCardHand()) >= 21;
+        return getHandValue(player) >= 21;
     }
 
     /**
@@ -103,8 +103,8 @@ public class CardGame {
      * @return BLACKJACK, WIN, TIE or LOSS depending on the outcome 
      */
     public RoundOutcome roundOutcome() {
-        int playerHandValue = getHandValue(player.getCardHand());
-        int dealerHandValue = getHandValue(dealer.getCardHand());
+        int playerHandValue = getHandValue(player);
+        int dealerHandValue = getHandValue(dealer);
 
         if (playerHandValue == 21 && player.getCardHandSize() == 2) {
             if (dealerHandValue == 21 && dealer.getCardHandSize() == 2) {

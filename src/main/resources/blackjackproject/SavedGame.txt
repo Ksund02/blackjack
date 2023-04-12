@@ -1,4 +1,1 @@
-H4,C5,S6,S13
-C9,C13
-750,0
-true,true
+NA

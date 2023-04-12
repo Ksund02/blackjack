@@ -3,10 +3,6 @@ package blackjackproject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,28 +36,26 @@ public class CardGameTest {
     @Test
     @DisplayName("Test calculating card hand value")
     public void testGetHandValue() {
-        List<Card> l1 = new ArrayList<>(Arrays.asList(
-            new Card('S', 1)
-            ));
+        cg1.getPlayer().drawCard(new Card('S', 1), cg1.getCardDeck());
 
-        assertEquals(11, cg1.getHandValue(l1));
-        l1.add(new Card('H', 1));
-        assertEquals(12, cg1.getHandValue(l1));
-        l1.add(new Card('H', 6));
-        assertEquals(18, cg1.getHandValue(l1));
-        l1.add(new Card('H', 3));
-        assertEquals(21, cg1.getHandValue(l1));
-        l1.add(new Card('S', 13));
-        assertEquals(21, cg1.getHandValue(l1));
-        l1.add(new Card('D', 11));
-        assertEquals(31, cg1.getHandValue(l1));
+        assertEquals(11, cg1.getHandValue(cg1.getPlayer()));
+        cg1.getPlayer().drawCard(new Card('H', 1), cg1.getCardDeck());
+        assertEquals(12, cg1.getHandValue(cg1.getPlayer()));
+        cg1.getPlayer().drawCard(new Card('H', 6), cg1.getCardDeck());
+        assertEquals(18, cg1.getHandValue(cg1.getPlayer()));
+        cg1.getPlayer().drawCard(new Card('H', 3), cg1.getCardDeck());
+        assertEquals(21, cg1.getHandValue(cg1.getPlayer()));
+        cg1.getPlayer().drawCard(new Card('S', 13), cg1.getCardDeck());
+        assertEquals(21, cg1.getHandValue(cg1.getPlayer()));
+        cg1.getPlayer().drawCard(new Card('D', 11), cg1.getCardDeck());
+        assertEquals(31, cg1.getHandValue(cg1.getPlayer()));
     }
 
     @Test
     @DisplayName("Test dealer plays their turn")
     public void testDealerPlaysHand() {
         cg1.dealerPlaysHand();
-        assertTrue(cg1.getHandValue(cg1.getDealer().getCardHand()) >= 17);
+        assertTrue(cg1.getHandValue(cg1.getDealer()) >= 17);
     }
 
     @Test

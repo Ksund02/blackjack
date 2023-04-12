@@ -205,7 +205,7 @@ public class BlackjackController extends SceneController {
 
         if (cardGame.roundOutcome().equals(RoundOutcome.BLACKJACK)) {
             setCardSpot(dealerCard1, cardGame.getDealer().getCardHand().get(0).toString());
-        } else if (cardGame.getHandValue(cardGame.getPlayer().getCardHand()) < 22) {
+        } else if (cardGame.getHandValue(cardGame.getPlayer()) < 22) {
             dealerTurn();
         }
         RoundOutcome roundOutcome = cardGame.roundOutcome();
