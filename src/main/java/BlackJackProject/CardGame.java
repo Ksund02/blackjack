@@ -179,10 +179,11 @@ public class CardGame {
         for (Card card : newPlayerCards) {
             player.drawCard(card, cardDeck);
         }
-        player.setBalance(Integer.parseInt(money[0]));
-        player.setCurrentBet(Integer.parseInt(money[1]));
         player.setHasPlacedBet(Boolean.parseBoolean(roundInfo[0]));
         player.setHasEndedRound(Boolean.parseBoolean(roundInfo[1]));
+        player.setBalance(Integer.parseInt(money[0]));
+        player.setCurrentBet(Integer.parseInt(money[1]));
+        
     }
 
     private List<Card> makeNewCardHand(String[] cards) {

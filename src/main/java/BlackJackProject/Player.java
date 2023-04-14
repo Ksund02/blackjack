@@ -71,11 +71,11 @@ public class Player implements CardHolder {
     }
 
     private void validCurrentBet(int currentBet) {
-        if (!hasPlacedBet && currentBet > balance) {
-            throw new IllegalArgumentException("Currentbet cannot be more than balance when betting!");
+        if (!hasPlacedBet && currentBet>balance) {
+            throw new IllegalArgumentException("Current bet cannot be more than balance when betting!");
         }
         if (currentBet < 0) {
-            throw new IllegalArgumentException("Currentbet cannot be negative!");
+            throw new IllegalArgumentException("Current bet cannot be negative!");
         }
     }
 
