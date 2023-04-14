@@ -92,7 +92,8 @@ public class BlackjackController extends SceneController {
 
         if (cardGame.getPlayer().getCurrentBet() == cardGame.getPlayer().getBalance()) {
             increaseButton.setDisable(true);
-        } else if (decreaseButton.isDisabled()) {
+        }
+        if (decreaseButton.isDisabled()) {
             decreaseButton.setDisable(false);
             betButton.setDisable(false);
         }
@@ -105,7 +106,8 @@ public class BlackjackController extends SceneController {
         if (cardGame.getPlayer().getCurrentBet() == 0) {
             decreaseButton.setDisable(true);
             betButton.setDisable(true);
-        } else if (increaseButton.isDisabled()) {
+        }
+        if (increaseButton.isDisabled()) {
             increaseButton.setDisable(false);
         }
     }
